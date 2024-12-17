@@ -3,9 +3,10 @@ package fr.eni.tp.encheres.dal;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.tp.encheres.bo.Retrait;
-
+@Repository
 public class RetraitDAOImpl implements RetraitDAO {
 
 	private static String FIND_BY_NO  = "SELECT a.no_article, r.rue, r.code_postal, r.ville FROM RETRAITS"

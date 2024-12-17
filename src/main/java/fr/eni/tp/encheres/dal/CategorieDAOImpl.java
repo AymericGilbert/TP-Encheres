@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.tp.encheres.bo.Categorie;
-
+@Repository
 public class CategorieDAOImpl implements CategorieDAO {
 
 	private static String FIND_BY_NO = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = :no_categorie";

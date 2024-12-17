@@ -1,11 +1,13 @@
 package fr.eni.tp.encheres.bll;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.dal.UtilisateurDAO;
 import fr.eni.tp.encheres.exception.BusinessException;
-
+@Service
 public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	private UtilisateurDAO utilisateurDAO;
