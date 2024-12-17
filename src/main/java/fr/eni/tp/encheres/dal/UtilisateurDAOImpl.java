@@ -10,7 +10,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	
 	private static String INSERT  = " ";
 	
-	private static String COUNT_NOM  = " ";
+	//private static String COUNT_NOM  = " ";
 	
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -31,7 +31,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 	}
 
-	@Override
+	//@Override
 	public boolean compteDejaExistant(String nom) {
 		// TODO Auto-generated method stub
 		return false;

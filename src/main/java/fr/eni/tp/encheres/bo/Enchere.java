@@ -26,6 +26,12 @@ public class Enchere implements Serializable {
 		this.concerne = concerne;
 	}
 
+	public Enchere() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
 	public Utilisateur getEncherit() {
 		return encherit;
 	}

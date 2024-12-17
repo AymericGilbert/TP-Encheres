@@ -52,6 +52,10 @@ public class Utilisateur implements Serializable {
 		this.encheres = encheres;
 	}
 
+	public Utilisateur() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<ArticlesVendu> getArticlesVendu() {
 		return articlesVendu;
 	}

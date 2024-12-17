@@ -12,7 +12,9 @@ public interface ArticleDAO {
 	
 	List<ArticlesVendu> findAll();
 	
-	List<ArticlesVendu> findArticle(long noArticle);
+
+	
+	String findArticle(long noArticle);
 	
 	boolean etatVenteArticle(boolean etatVente);
 }

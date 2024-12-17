@@ -3,21 +3,17 @@ package fr.eni.tp.encheres.bll;
 import java.util.List;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
-import fr.eni.tp.encheres.exception.BusinessException;
 import fr.eni.tp.encheres.bo.Categorie;
-import fr.eni.tp.encheres.bo.Utilisateur;
 
 public interface ArticleService {
 	
 	List<ArticlesVendu> consulterArticles();
-	ArticlesVendu consulterArticleParId(long id);
+	
+	ArticlesVendu consulterArticleParNo(long noArticle);
 	
 	List<Categorie> consulterCategorie();
-	Categorie consulterCategorieParId(long id);
+	Categorie consulterCategorieParNo(long noArticle);
 	
-	List<Utilisateur> consulterUtilisateur();
-	Utilisateur consulterUtilisateurParId(long id);
-	
-	void creerArticle(ArticlesVendu article) throws BusinessException;
+	//void creerArticle(ArticlesVendu article) throws BusinessException;
 
 }

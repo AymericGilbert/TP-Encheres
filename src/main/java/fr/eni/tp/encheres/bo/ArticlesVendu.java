@@ -53,6 +53,12 @@ public class ArticlesVendu implements Serializable {
 
 	
 
+	public ArticlesVendu() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public long getNoArticle() {
 		return noArticle;
 	}

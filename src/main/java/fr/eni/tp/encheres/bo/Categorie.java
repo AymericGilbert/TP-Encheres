@@ -23,6 +23,10 @@ public class Categorie implements Serializable {
 		this.categorieArticle = categorieArticle;
 	}
 
+	public Categorie() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<ArticlesVendu> getCategorieArticle() {
 		return categorieArticle;
 	}

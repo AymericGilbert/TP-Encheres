@@ -1,10 +1,18 @@
 package fr.eni.tp.encheres.dal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
+import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.bo.Utilisateur;
 
 public class ArticleDAOImpl implements ArticleDAO {
 
@@ -32,35 +40,80 @@ public class ArticleDAOImpl implements ArticleDAO {
 	public ArticleDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	this.jdbcTemplate = jdbcTemplate;
 }
-
 	@Override
 	public void create(ArticlesVendu articles) {
-		// TODO Auto-generated method stub
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("nom_article", articles.getNomArticle());
+		map.addValue("description", articles.getDescritpion());
+		map.addValue("date_debut_encheres", articles.getDateDebutEncheres());
+		map.addValue("date_fin_encheres", articles.getDateFinEncheres());
+		map.addValue("prix_initial", articles.getMiseAPrix());
+		map.addValue("prix_vente", articles.getPrixVente());
+		map.addValue("no_utilisateur", articles.getVendeur().getNoUtilisateur());
+		map.addValue("no_categorie", articles.getCategorieArticle().getNoCategorie());
+		
+		this.jdbcTemplate.update(INSERT, map, keyHolder);
+		if (keyHolder != null && keyHolder.getKey() != null) {
+			articles.setNoArticle(keyHolder.getKey().longValue());
+		}
 	}
 
 	@Override
 	public ArticlesVendu read(long noArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("no_article", noArticle);
+		return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new ArticleRowMapper());
 	}
 
 	@Override
 	public List<ArticlesVendu> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbcTemplate.query(FIND_ALL, new ArticleRowMapper());
 	}
 	
 	@Override
-	public List<ArticlesVendu> findArticle(long noArticle) {
-		// TODO Auto-generated method stub
-		return null;
+	public String findArticle(long noArticle) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("no_article", noArticle);
+		return jdbcTemplate.queryForObject(FIND_BY_ARTICLE, map, String.class);
 	}
 	
-	@Override
+	
+	//@Override
 	public boolean etatVenteArticle(boolean etatVente) {
-		// TODO Auto-generated method stub
-		return false;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("no_article", etatVente);
+		
+		int nbArticle = jdbcTemplate.queryForObject(COUNT_BY_ARTICLE, map, Integer.class);
+		return nbArticle > 0 ? true : false;
+	}
+
+	class ArticleRowMapper implements RowMapper<ArticlesVendu>{
+
+		@Override
+		public ArticlesVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ArticlesVendu a = new ArticlesVendu();
+			a.setNoArticle(rs.getLong("nom_article"));
+			a.setDescritpion(rs.getString("description"));
+			a.setDateDebutEncheres(rs.getString("date_debut_encheres"));
+			a.setDateFinEncheres(rs.getString("date_fin_encheres"));
+			a.setMiseAPrix(rs.getInt("prix_initial"));
+			a.setPrixVente(rs.getInt("prix_vente"));
+			
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
+			a.setVendeur(utilisateur);
+			
+			Categorie categorie = new Categorie();
+			categorie.setNoCategorie(rs.getLong("no_categorie"));
+			a.setCategorieArticle(categorie);
+			
+			
+			return a;
+		}
+		
+		
 	}
 
 	

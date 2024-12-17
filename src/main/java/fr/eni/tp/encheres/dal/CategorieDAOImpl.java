@@ -2,15 +2,17 @@ package fr.eni.tp.encheres.dal;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import fr.eni.tp.encheres.bo.Categorie;
 
 public class CategorieDAOImpl implements CategorieDAO {
 
-	private static String FIND_BY_NO = " ";
+	private static String FIND_BY_NO = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = :no_categorie";
 	
-	private static String FIND_ALL = " ";
+	private static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES ";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -20,14 +22,15 @@ public class CategorieDAOImpl implements CategorieDAO {
 
 	@Override
 	public Categorie read(long noCategorie) {
-		// TODO Auto-generated method stub
-		return null;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("no_categorie", noCategorie);
+		return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
 	@Override
 	public List<Categorie> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
 }
