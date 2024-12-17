@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Connexion</title>
+
+
+</head>
+<body>
+<form th:action="@{/login}" method="POST">
+	<ul>
+		<li>
+			<label for="">Pseudo</label>
+			<input type="text" name="username"/>
+		</li>
+		<li>
+			<label for="">Mot de passe</label>
+			<input type="password" name="password" />
+		</li>
+		<li>
+			<button type="submit">Connexion</button>
+		</li>
+	</ul>
+
+
+</form>
+</body>
+</html>
