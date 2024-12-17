@@ -79,7 +79,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return jdbcTemplate.queryForObject(FIND_BY_ARTICLE, map, String.class);
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> d82403ab3e66371aac5f895ea6e86b3ff998a782
 	//@Override
 	public boolean etatVenteArticle(boolean etatVente) {
 		MapSqlParameterSource map = new MapSqlParameterSource();

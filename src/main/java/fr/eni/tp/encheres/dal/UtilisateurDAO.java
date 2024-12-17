@@ -1,5 +1,6 @@
 package fr.eni.tp.encheres.dal;
 
+import java.util.List;
 import fr.eni.tp.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
@@ -8,5 +9,9 @@ public interface UtilisateurDAO {
 	
 	void createUtilisateur(Utilisateur utilisateur);
 	
+	void update(Utilisateur utilisateur);
+	
 	boolean compteDejaExistant(String nom);
+	
+	List<Utilisateur> findAll();
 }
