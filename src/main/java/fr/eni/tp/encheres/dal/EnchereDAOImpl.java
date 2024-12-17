@@ -7,11 +7,12 @@ import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Enchere;
 import fr.eni.tp.encheres.bo.Utilisateur;
-
+@Repository
 public class EnchereDAOImpl implements EnchereDAO {
 
 	private static String INSERT = "INSERT INTO [ENCHERES] (no_utilisateur, no_article, date_enchere, montant_enchere)"

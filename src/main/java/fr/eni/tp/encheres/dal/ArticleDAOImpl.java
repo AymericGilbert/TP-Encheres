@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
@@ -20,15 +21,15 @@ public class ArticleDAOImpl implements ArticleDAO {
 			                            + " ( :nom_article, :description, :date_debut_encheres,:date_fin_encheres , :prix_initial, :prix_vente, :no_utilisateur, :no_categorie)";
 	
 	private static String FIND_BY_NO  = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente"
-			      							+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS "
+			      							+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS a "
 			      							+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
-			      							+ "inner join CATEGORIES c on c.no_categorie = a.no_categorie WHERE a.no_article = :no_article ";
+			      							+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie WHERE a.no_article = :no_article ";
 			
 	
 	private static String FIND_ALL = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
-									 	+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS "
+									 	+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS a "
 									 	+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
-									 	+ "inner join CATEGORIES c on c.no_categorie = a.no_categorie ";
+									 	+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie ";
 	
 	private static String FIND_BY_ARTICLE  = "SELECT nom_article FROM ARTICLES_VENDUS WHERE no_article = :no_article";
 	
@@ -78,7 +79,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 		map.addValue("no_article", noArticle);
 		return jdbcTemplate.queryForObject(FIND_BY_ARTICLE, map, String.class);
 	}
-	
 	
 	//@Override
 	public boolean etatVenteArticle(boolean etatVente) {
