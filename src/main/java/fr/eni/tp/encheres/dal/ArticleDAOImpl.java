@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
 import fr.eni.tp.encheres.bo.Utilisateur;
-
+@Repository
 public class ArticleDAOImpl implements ArticleDAO {
 
 	private static String INSERT  = "INSERT INTO [ARTICLES_VENDUS] (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES"
