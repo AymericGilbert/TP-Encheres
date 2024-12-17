@@ -57,7 +57,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return null;
 	}
 	
-	@Override
+	//@Override
 	public boolean etatVenteArticle(boolean etatVente) {
 		// TODO Auto-generated method stub
 		return false;
