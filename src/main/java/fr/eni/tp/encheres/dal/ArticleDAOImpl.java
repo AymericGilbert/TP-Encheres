@@ -94,7 +94,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 		@Override
 		public ArticlesVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
 			ArticlesVendu a = new ArticlesVendu();
-			a.setNoArticle(rs.getLong("nom_article"));
+			a.setNoArticle(rs.getLong("no_article"));
+			a.setNomArticle(rs.getString("nom_article"));
 			a.setDescritpion(rs.getString("description"));
 			a.setDateDebutEncheres(rs.getString("date_debut_encheres"));
 			a.setDateFinEncheres(rs.getString("date_fin_encheres"));

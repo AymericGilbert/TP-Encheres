@@ -5,14 +5,12 @@ import java.util.List;
 
 public class Utilisateur implements Serializable {
 	
-	
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	//numero utilisteur
+	//numero utilisateur
 	private long noUtilisateur ;
 	private String pseudo;
 	private String nom;
@@ -27,7 +25,6 @@ public class Utilisateur implements Serializable {
 	private boolean administrateur;
 	
 	private List<ArticlesVendu> articlesVendu;
-	
 	private List<Enchere> encheres;
 	
 	
@@ -51,10 +48,12 @@ public class Utilisateur implements Serializable {
 		this.articlesVendu = articlesVendu;
 		this.encheres = encheres;
 	}
+	
 
 	public Utilisateur() {
-		// TODO Auto-generated constructor stub
+		
 	}
+
 
 	public List<ArticlesVendu> getArticlesVendu() {
 		return articlesVendu;

@@ -81,7 +81,6 @@ public class SecuriteConfig {
 			jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT pseudo, role FROM ROLES WHERE pseudo = ?");
 			
 			return jdbcUserDetailsManager;
-			
 		}
 		
 }		

@@ -16,15 +16,15 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static String FIND_BY_NO = "SELECT no_utilisateur, pseudo, nom, prenom FROM UTILISATEURS WHERE no_utilisateur = :no_utilisateur";
 	
 	private static String INSERT  = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) "
-									+ "VALUES (:idFilm, :idParticipant)";
+									+ "VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :code_postal, :ville, :mot_de_passe, :credit, :administrateur)";
 	
 	private static final String UPDATE = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, "
 										  + "telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville, "
-										  + "mot_de_passe = :mot_de_passe, credit = :credit, administrateur = :administrateur";
+										  + "mot_de_passe = :mot_de_passe, credit = :credit, administrateur = :administrateur WHERE no_utilisateur = :no_utilisateur";
 	
 	//private static String COUNT_NOM  = " ";
 	
-	private static final String FIND_ALL = "SELECT email, nom, prenom FROM FORMATEURS";
+	private static final String FIND_ALL = "SELECT email, nom, prenom FROM UTILISATEURS";
 	
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
