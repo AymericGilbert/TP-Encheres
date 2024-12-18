@@ -1,0 +1,47 @@
+@charset "UTF-8";
+table {
+	font-family: 'Arial', sans-serif;
+	border-collapse: collapse;
+	width: 90%;
+	margin: 20px auto;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+table td, table th {
+	border: 1px solid #e0e0e0;
+	padding: 12px;
+	text-align: left;
+	color: #333; /* Modification de la couleur de l'écriture des cellules */
+}
+
+table tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+table tr:hover {
+	background-color: #f1f1f1;
+}
+
+table th {
+	background-color: #007bff;
+	color: white;
+	padding: 12px;
+	text-align: left;
+}
+
+table a:link, table a:visited {
+	background-color: #007bff;
+	color: white;
+	padding: 8px 16px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+table a:hover, table a:active {
+	background-color: #0056b3;
+}

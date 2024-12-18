@@ -33,7 +33,7 @@ public class SecuriteConfig {
 		
 		http
 			.authorizeHttpRequests((authorize) -> authorize
-					.requestMatchers("/login").permitAll()
+					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
 					.requestMatchers("/...").hasAnyRole("ADMIN")

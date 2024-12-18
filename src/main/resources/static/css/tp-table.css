@@ -1,0 +1,41 @@
+@charset "UTF-8";
+table {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 90%;
+}
+
+table td, table th {
+	border: 2px solid rgb(255, 128, 0);
+	padding: 8px;
+}
+
+table tr:nth-child(even) {
+	background-color: rgb(0, 0, 160);
+	color: rgb(255, 128, 0);
+}
+
+table tr:hover {
+	background-color: rgb(0, 0, 160);
+}
+
+table th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #000000;
+	color: rgb(255, 128, 0);
+}
+
+table a:link, table a:visited {
+	background-color: #008080;
+	color: white;
+	padding: 14px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+table a:hover, table a:active {
+	background-color: #004040;
+}

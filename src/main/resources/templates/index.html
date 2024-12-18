@@ -6,11 +6,40 @@
 	 a plus de fonction et affichant mes vente en cours></!-->
 	
 <title>ENI Enchere</title>
+<link rel="stylesheet" th:href="@{/css/general.css}" />
+<link rel="icon" th:href="@{/images/logoENI.png}" />
+<link rel="stylesheet" th:href="@{/css/majform.css}" />
 </head>
 <body>
-	<h1>Liste des enchères</h1>
-	<div th:replace="~{fragments/fragment-entete::entete}"></div>
+	<a th:href="@{/login}" >S'inscrire - Se connecter</a>
 	
-
+	
+	<h1>ENI-Enchères</h1>
+	
+	
+	 <div>
+        <h3>Filtres :</h3>
+        <form th:action="@{/}" method="POST" th:object="${articleVendus}">
+            <label for="search">Le nom de l'article contient :</label>
+            <input type="text" th:field="*{nomArticle}" id="search" name="search">
+            
+            <label for="categorie">Catégorie :</label>
+            <select th:field="*{categorieArticle}">
+   				<option th:each="c : ${categorieSession}" th:value="${c.noCategorie}" th:text="${c.libelle}"></option>
+			</select>
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+	
+	<h2>Liste des enchères</h2>
+	
+	<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    <div th:each="article : ${articles}" style="border: 1px solid black; width: 300px; padding: 10px; box-shadow: 2px 2px 5px grey;">
+        <h3 th:text="${article.nomArticle}">Nom de l'article</h3>
+        <p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
+        <p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
+        <p>Vendeur : <span th:text="${article.vendeur}"></span></p>
+    </div>
+</div>
 </body>
 </html>
