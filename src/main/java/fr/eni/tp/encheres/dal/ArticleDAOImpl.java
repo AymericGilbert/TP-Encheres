@@ -20,7 +20,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static String INSERT  = "INSERT INTO [ARTICLES_VENDUS] (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES"
 			                            + " ( :nom_article, :description, :date_debut_encheres,:date_fin_encheres , :prix_initial, :prix_vente, :no_utilisateur, :no_categorie)";
 	
-	private static String FIND_BY_NO  = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente"
+	private static String FIND_BY_NO  = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
 			      							+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS a "
 			      							+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
 			      							+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie WHERE a.no_article = :no_article ";

@@ -12,7 +12,7 @@ public interface ArticleService {
 	ArticlesVendu consulterArticleParNo(long noArticle);
 	
 	List<Categorie> consulterCategorie();
-	Categorie consulterCategorieParNo(long noArticle);
+	Categorie consulterCategorieParNo(long noCategorie);
 	
 	//void creerArticle(ArticlesVendu article) throws BusinessException;
 

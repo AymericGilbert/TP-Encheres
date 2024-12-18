@@ -1,0 +1,193 @@
+@charset "UTF-8";
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thème Parking Moderne</title>
+    <style>
+        /* ============ Styles généraux ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1f1f2e, #3b3b5e);
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .parking-lot {
+            position: relative;
+            width: 90%;
+            height: 80vh;
+            background: linear-gradient(135deg, #2b2b40, #1f1f2e);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 15px;
+            padding: 20px;
+        }
+
+        /* ============ Cases de parking ============ */
+        .parking-spot {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #47475e, #5b5b7e);
+            border-radius: 10px;
+            border: 2px dashed #fff;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .parking-spot:hover {
+            background: linear-gradient(135deg, #616191, #7e7eb2);
+            border-color: #61dafb;
+        }
+
+        .parking-spot::before {
+            content: 'P';
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            position: absolute;
+        }
+
+        /* ============ Lampadaires ============ */
+        .lamp {
+            position: absolute;
+            width: 10px;
+            height: 120px;
+            background: linear-gradient(180deg, #666, #333);
+            border-radius: 5px;
+        }
+
+        .lamp::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: #ffcc00;
+            border-radius: 50%;
+            box-shadow: 0 0 20px 10px #ffcc00;
+        }
+
+        .lamp.left {
+            top: 10px;
+            left: 20px;
+        }
+
+        .lamp.right {
+            top: 10px;
+            right: 20px;
+        }
+
+        /* ============ Marquages au sol ============ */
+        .line {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            width: 90%;
+            height: 4px;
+            background: #fff;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        /* ============ Texte de titre ============ */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #61dafb;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* ============ Bouton de réinitialisation ============ */
+        .btn-refresh {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6600, #ff9933);
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-refresh:hover {
+            background: linear-gradient(135deg, #ff9933, #ffcc66);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Thème Parking Moderne</h1>
+
+    <button class="btn-refresh" onclick="refreshPage()">🔄 Recharger la page</button>
+
+    <div class="container">
+        <!-- Parking -->
+        <div class="parking-lot">
+            <!-- Lampadaires -->
+            <div class="lamp left"></div>
+            <div class="lamp right"></div>
+
+            <!-- Cases de parking -->
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+            <div class="parking-spot"></div>
+        </div>
+    </div>
+
+    <script>
+        function refreshPage() {
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>

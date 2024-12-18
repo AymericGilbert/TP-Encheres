@@ -42,8 +42,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 
 	@Override
-	public Categorie consulterCategorieParNo(long noArticle) {
-		return this.categorieDAO.read(noArticle);
+	public Categorie consulterCategorieParNo(long noCategorie) {
+		return this.categorieDAO.read(noCategorie);
 	}
 
 
