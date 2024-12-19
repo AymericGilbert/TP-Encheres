@@ -1,8 +1,8 @@
 <nav th:fragment="frag-entete">
 	
-	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/}" >Accueil</a>
-	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/mon-profil}">mon profil</a>
-	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/vendre-article}">vendre un article</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{/}" >Accueil</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{/mon-profil-detail}">mon profil</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{/vendre-article}">vendre un article</a>
 	<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Deconexion</a>
 	
 	

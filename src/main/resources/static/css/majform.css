@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1f1f2e, #3b3b5e);
+            background: linear-gradient(135deg, #1f1f2e, rgb(64, 128, 128));
             color: #fff;
         }
 

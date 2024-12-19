@@ -99,8 +99,6 @@ public class EnchereController {
 			e.printStackTrace();
 		}
 	       
-
-	       
-	        return "redirect:/index";
+	        return "redirect:/";
 	    }
 }

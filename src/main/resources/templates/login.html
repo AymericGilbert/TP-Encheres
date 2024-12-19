@@ -4,13 +4,15 @@
 <meta charset="UTF-8">
 <title>Connexion</title>
 <!--doit renvoyer vers une page mon proofil/ creation></!-->
-
+<link rel="stylesheet" th:href="@{/css/general.css}" />
+<link rel="icon" th:href="@{/images/logoENI.png}" />
+<link rel="stylesheet" th:href="@{/css/majform.css}" />
 </head>
 <body>
 <form th:action="@{/login}" method="POST">
 	<ul>
 		<li>
-			<label for="">Pseudo</label>
+			<label for="">Email</label>
 			<input type="text" name="username"/>
 		</li>
 		<li>

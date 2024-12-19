@@ -11,8 +11,8 @@
 <link rel="stylesheet" th:href="@{/css/majform.css}" />
 </head>
 <body>
-	<a th:href="@{/login}" >S'inscrire - Se connecter</a>
-	<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
+	<a sec:authorize="isAnonymous()" th:href="@{/login}" >S'inscrire - Se connecter</a>
+	<div th:if="${session.user != null}" th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
 	
 	<h1>ENI-Enchères</h1>
 	
@@ -38,7 +38,7 @@
         <h3 th:text="${article.nomArticle}">Nom de l'article</h3>
         <p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
         <p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
-        <p>Vendeur : <span th:text="${article.vendeur}"></span></p>
+        <p>Vendeur : <span th:text="${article.vendeur.pseudo}"></span></p>
     </div>
 </div>
 </body>
