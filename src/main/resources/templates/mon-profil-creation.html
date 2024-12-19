@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<!--affiche la creation du profil et 
+	afficheras la page pour modifier le profil une fois connecter
+	remplace les bouton creer/annuler 
+	par enregistrer/supprimer mon compte></!-->
+
+	<title>ENI Enchères - mon profil</title>
+</head>
+<header>
+	<h2>ENI-Enchères</h2>
+</header>
+<body>
+	<section>
+		<h1>Mon profil Création</h1>
+	</section>
+	<section>
+		<form th:action="@{/mon-profil-creation}" th:object="${utilisateur}" method="post">
+    		<label for="pseudo">Pseudo :</label>
+    		<input type="text" id="pseudo" th:field="*{pseudo}" required><br>
+
+    		<label for="nom">Nom :</label>
+    		<input type="text" id="nom" th:field="*{nom}" required><br>
+
+    		<label for="prenom">Prénom :</label>
+    		<input type="text" id="prenom" th:field="*{prenom}" required><br>
+
+    		<label for="email">Email :</label>
+    		<input type="email" id="email" th:field="*{email}" required><br>
+
+    		<label for="telephone">Téléphone :</label>
+    		<input type="tel" id="telephone" th:field="*{telephone}" required><br>
+
+    		<label for="rue">Rue :</label>
+    		<input type="text" id="rue" th:field="*{rue}" required><br>
+
+    		<label for="codePostal">Code Postal :</label>
+    		<input type="text" id="codePostal" th:field="*{codePostal}" required><br>
+
+    		<label for="ville">Ville :</label>
+    		<input type="text" id="ville" th:field="*{ville}" required><br>
+
+    		<label for="motDePasse">Mot de passe :</label>
+    		<input type="password" id="motDePasse" th:field="*{motDePasse}" required><br>
+
+    		<button type="submit">Créer</button>
+    		<button type="button" onclick="window.location.href='/index'">Annuler</button>
+		</form>
+	</section>

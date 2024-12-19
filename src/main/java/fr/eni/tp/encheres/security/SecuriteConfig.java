@@ -36,7 +36,7 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/...").hasAnyRole("USER")//ADMIN
+					.requestMatchers("/...").hasAnyRole("ADMIN")
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
@@ -54,7 +54,7 @@ public class SecuriteConfig {
 		return http.build();
 	}
 
-	@Bean
+	//@Bean
 	public UserDetailsService userDetailsService() {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		String passwordChiffre = passwordEncoder.encode("Pa$$wOrd");
@@ -72,13 +72,13 @@ public class SecuriteConfig {
 			return new InMemoryUserDetailsManager(user, admin);
 	}
 	
-		//@Bean
+		@Bean
 		public UserDetailsService userDetailsService(DataSource dataSource) {
 			JdbcUserDetailsManager  jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 			
 			//cofiguration de la requete permettant de verifier que l'utilisateur est autorisé à se connecter
-			jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT pseudo, password, 1 FROM UTILISATEUR WHERE pseudo = ?");
-			jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT pseudo, role FROM ROLES WHERE pseudo = ?");
+			jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT email, mot_de_passe, 1 FROM UTILISATEURS WHERE email = ?");
+			jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT email, CASE administrateur WHEN 1 THEN 'ADMIN' WHEN 0 THEN 'USER' END FROM UTILISATEURS WHERE email = ?");
 			
 			return jdbcUserDetailsManager;
 		}

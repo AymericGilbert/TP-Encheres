@@ -2,10 +2,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<!--affiche la creation du profil et 
-	afficheras la page pour modifier le profil une fois connecter
-	remplace les bouton creer/annuler 
-	par enregistrer/supprimer mon compte></!-->
+	<!--affiche la page pour modifier le profil une fois connecter
+	</!-->
 
 	<title>ENI Enchères - mon profil</title>
 </head>
@@ -17,118 +15,41 @@
 		<h1>Mon profil</h1>
 	</section>
 	<section>
-		<form th:action="@{/mon-profil}" th:object="${utilisateur}" method="post">
-    		<label for="pseudo">Pseudo :</label>
-    		<input type="text" id="pseudo" th:field="*{pseudo}" required><br>
-
-    		<label for="nom">Nom :</label>
-    		<input type="text" id="nom" th:field="*{nom}" required><br>
-
-    		<label for="prenom">Prénom :</label>
-    		<input type="text" id="prenom" th:field="*{prenom}" required><br>
-
-    		<label for="email">Email :</label>
-    		<input type="email" id="email" th:field="*{email}" required><br>
-
-    		<label for="telephone">Téléphone :</label>
-    		<input type="tel" id="telephone" th:field="*{telephone}" required><br>
-
-    		<label for="rue">Rue :</label>
-    		<input type="text" id="rue" th:field="*{rue}" required><br>
-
-    		<label for="codePostal">Code Postal :</label>
-    		<input type="text" id="codePostal" th:field="*{codePostal}" required><br>
-
-    		<label for="ville">Ville :</label>
-    		<input type="text" id="ville" th:field="*{ville}" required><br>
-
-    		<label for="motDePasse">Mot de passe :</label>
-    		<input type="password" id="motDePasse" th:field="*{motDePasse}" required><br>
-
-    		<button type="submit">Créer</button>
-    		<button type="button" onclick="window.location.href='/index'">Annuler</button>
-		</form>
+		<table>
+        	<tr>
+            	<th>Pseudo</th>
+            	<td th:text="${utilisateur.pseudo}"></td>
+        	</tr>
+        	<tr>
+            	<th>Nom</th>
+            	<td th:text="${utilisateur.nom}"></td>
+        	</tr>
+        	<tr>
+            	<th>Prénom</th>
+            	<td th:text="${utilisateur.prenom}"></td>
+        	</tr>
+        	<tr>
+            	<th>Email</th>
+            	<td th:text="${utilisateur.email}"></td>
+        	</tr>
+        	<tr>
+            	<th>Téléphone</th>
+            	<td th:text="${utilisateur.telephone}"></td>
+        	</tr>
+        	<tr>
+            	<th>Rue</th>
+            	<td th:text="${utilisateur.rue}"></td>
+        	</tr>
+        	<tr>
+            	<th>Code Postal</th>
+            	<td th:text="${utilisateur.codePostal}"></td>
+        	</tr>
+        	<tr>
+            	<th>Ville</th>
+            	<td th:text="${utilisateur.ville}"></td>
+        	</tr>
+    	</table>
+    	<a href="/mon-profil-detail">Modifier mon profil</a>
 	</section>
-	 <!-- 
-	<section>
-		<div th:action="@{/mon-profil}" th:object="${utilisateur}" method="post">
-			<ul>
-				<li>
-					<label for="idPseudo">Pseudo :</label>
-					<input id="idPseudo" type="text" th:field="*{pseudo}"/>
-				</li>
-				<li>
-					<label for="idNom">Nom :</label>
-					<input id="idNom" type="text" th:field="*{nom}"/>
-				</li>
-				<li>
-					<label for="idPrenom">Prenom :</label>
-					<input id="idPrenom" type="text" th:field="*{prenom}"/>
-				</li>
-				<li>
-					<label for="idEmail">Email :</label>
-					<input id="idEmail" type="text" th:field="*{email}"/>
-				</li>
-				<li>
-					<label for="idTelephone">Telephone :</label>
-					<input id="idTelephone" type="text" th:field="*{telephone}"/>
-				</li>
-				<li>
-					<label for="idRue">Rue :</label>
-					<input id="idRue" type="text" th:field="*{rue}"/>
-				</li>
-				<li>
-					<label for="idCodePostal">Code Postal :</label>
-					<input id="idCodePostal" type="text" th:field="*{codePostal}"/>
-				</li>
-				<li>
-					<label for="idVille">Ville :</label>
-					<input id="idVille" type="text" th:field="*{ville}"/>
-				</li>
-			</ul>
-		</div>
-		<button type="button" onclick="window.location.href='/mon-profil-detail'">Annuler</button>
-	</section>
-	<section>
-		<div th:action="@{/mon-profil/vendeur}" th:object="${utilisateur}" method="post">
-			<ul>
-				<li>
-					<label for="idPseudo">Pseudo :</label>
-					<input id="idPseudo" type="text" th:field="*{pseudo}"/>
-				</li>
-				<li>
-					<label for="idNom">Nom :</label>
-					<input id="idNom" type="text" th:field="*{nom}"/>
-				</li>
-				<li>
-					<label for="idPrenom">Prenom :</label>
-					<input id="idPrenom" type="text" th:field="*{prenom}"/>
-				</li>
-				<li>
-					<label for="idEmail">Email :</label>
-					<input id="idEmail" type="text" th:field="*{email}"/>
-				</li>
-				<li>
-					<label for="idTelephone">Telephone :</label>
-					<input id="idTelephone" type="text" th:field="*{telephone}"/>
-				</li>
-				<li>
-					<label for="idRue">Rue :</label>
-					<input id="idRue" type="text" th:field="*{rue}"/>
-				</li>
-				<li>
-					<label for="idCodePostal">Code Postal :</label>
-					<input id="idCodePostal" type="text" th:field="*{codePostal}"/>
-				</li>
-				<li>
-					<label for="idVille">Ville :</label>
-					<input id="idVille" type="text" th:field="*{ville}"/>
-				</li>
-			</ul>
-		</div>
-	</section>
-	-->
-	
-	
 </body>
 </html>

@@ -1,19 +1,18 @@
 package fr.eni.tp.encheres.dal;
 
-import java.util.List;
-
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import fr.eni.tp.encheres.bo.Utilisateur;
+
+
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private static String FIND_BY_NO = "SELECT no_utilisateur, pseudo, nom, prenom FROM UTILISATEURS WHERE no_utilisateur = :no_utilisateur";
+	private static String FIND_BY_PSEUDO = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS WHERE pseudo = :pseudo";
 	
 	private static String INSERT  = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) "
 									+ "VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :code_postal, :ville, :mot_de_passe, :credit, :administrateur)";
@@ -34,10 +33,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 }
 
 	@Override
-	public Utilisateur read(long noUtilisateur) {
+	public Utilisateur read(String pseudoUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		map.addValue("no_utilisateur", noUtilisateur);
-		return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
+		map.addValue("pseudo", pseudoUtilisateur);
+		return this.jdbcTemplate.queryForObject(FIND_BY_PSEUDO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 	@Override
@@ -93,8 +92,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public List<Utilisateur> findAll() {
-		return this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
+	public Utilisateur findUtilisateur() {
+		return (Utilisateur) this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 }
