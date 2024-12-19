@@ -1,6 +1,10 @@
-<nav th:fragment="entete">
-	<a th:href="@{/}" >Accueil</a>
-	<a th:href="@{/enchere}">Liste des enchères</a>
+<nav th:fragment="frag-entete">
+	
+	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/}" >Accueil</a>
+	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/mon-profil}">mon profil</a>
+	<a sec:authorize="hasRole('ROLE_USER')"th:href="@{/vendre-article}">vendre un article</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Deconexion</a>
 	
 	
 </nav>
+

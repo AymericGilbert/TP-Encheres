@@ -1,6 +1,7 @@
 package fr.eni.tp.encheres.bo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ArticlesVendu implements Serializable {
@@ -12,9 +13,9 @@ public class ArticlesVendu implements Serializable {
 	
 	private long noArticle;
 	private String nomArticle;
-	private String descritpion;
-	private String dateDebutEncheres;
-	private String dateFinEncheres;
+	private String description;
+	private LocalDateTime dateDebutEncheres;
+	private LocalDateTime dateFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
 	private boolean etatVente;
@@ -26,20 +27,22 @@ public class ArticlesVendu implements Serializable {
 	private Categorie categorieArticle;
 	
 	private List<Enchere> encheres;
-	
 
 	
 	
+	public ArticlesVendu() {
+		super();
+	}
 
-	
 
-	public ArticlesVendu(long noArticle, String nomArticle, String descritpion, String dateDebutEncheres,
-			String dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur vendeur,
+
+	public ArticlesVendu(long noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, boolean etatVente, Utilisateur vendeur,
 			Retrait lieuRetrait, Categorie categorieArticle, List<Enchere> encheres) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
-		this.descritpion = descritpion;
+		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
@@ -49,12 +52,6 @@ public class ArticlesVendu implements Serializable {
 		this.lieuRetrait = lieuRetrait;
 		this.categorieArticle = categorieArticle;
 		this.encheres = encheres;
-	}
-
-	
-
-	public ArticlesVendu() {
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -83,37 +80,37 @@ public class ArticlesVendu implements Serializable {
 
 
 
-	public String getDescritpion() {
-		return descritpion;
+	public String getDescription() {
+		return description;
 	}
 
 
 
-	public void setDescritpion(String descritpion) {
-		this.descritpion = descritpion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 
 
-	public String getDateDebutEncheres() {
+	public LocalDateTime getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
 
 
-	public void setDateDebutEncheres(String dateDebutEncheres) {
+	public void setDateDebutEncheres(LocalDateTime dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
 
 
 
-	public String getDateFinEncheres() {
+	public LocalDateTime getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
 
 
-	public void setDateFinEncheres(String dateFinEncheres) {
+	public void setDateFinEncheres(LocalDateTime dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 
@@ -205,16 +202,11 @@ public class ArticlesVendu implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ArticlesVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", descritpion=" + descritpion
+		return "ArticlesVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", vendeur=" + vendeur
 				+ ", lieuRetrait=" + lieuRetrait + ", categorieArticle=" + categorieArticle + ", encheres=" + encheres
 				+ "]";
 	}
-
-
-
-	
-	
 	
 }

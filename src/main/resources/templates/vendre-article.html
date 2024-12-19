@@ -2,13 +2,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/general.css}" />
+<link rel="icon" th:href="@{/images/logoENI.png}" />
+<link rel="stylesheet" th:href="@{/css/majform.css}" />
+</head>
 <!--affichage de la vue pour permettre de creer un produit 
 n'est accessible que par un utilisateur
 une fois enregistrer si l'utilisateur
  reviens dessus il peut la modifier></!-->
-<title>Insert title here</title>
+<title>ENI-Enchères</title>
+
+
+
 </head>
 <body>
+<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
+ <h1>Nouvelle Vente</h1>
+    <form th:action="@{/vendre-article}" th:object="${articleVendus}" method="post">
+       
+        <label for="nom">Article :</label>
+        <input type="text" id="nom" th:field="*{nomArticle}" required="required"/><br/>
 
-</body>
+        <label for="description">Description :</label>
+        <textarea id="description" th:field="*{description}" required="required" ></textarea><br/>
+
+        <label for="categorie">Catégorie :</label>
+		<select id="categorie" th:field="*{categorieArticle}" required>
+   			 <option value="" disabled selected>-- Sélectionnez une catégorie --</option>
+    		<option th:each="categorie : ${categories}" 
+            	th:value="${categorie.noCategorie}" 
+            	th:text="${categorie.libelle}">
+    		</option>
+		</select>
+
+        <label for="miseAPrix">Mise à prix :</label>
+        <input type="number" id="miseAPrix" th:field="*{miseAPrix}" required="required" /><br/>
+
+        <label for="dateDebutEncheres">Début de l'enchère :</label>
+        <input type="datetime-local" id="dateDebutEncheres" th:field="*{dateDebutEncheres}" required="required"/><br/>
+
+        <label for="dateFinEncheres">Fin de l'enchère :</label>
+        <input type="datetime-local" id="dateFinEncheres" th:field="*{dateFinEncheres}" required="required"/><br/>
+
+        <fieldset>
+            <legend>Retrait</legend>
+            <label for="rue">Rue :</label>
+            <input type="text" id="rue" th:field="*{lieuRetrait.rue}" required/><br/>
+
+            <label for="codePostal">Code postal :</label>
+            <input type="text" id="codePostal" th:field="*{lieuRetrait.codePostal}" required/><br/>
+
+            <label for="ville">Ville :</label>
+            <input type="text" id="ville" th:field="*{lieuRetrait.ville}" required/><br/>
+        </fieldset>
+
+        <button type="submit">Enregistrer</button>
+        <button type="reset">Annuler</button>
+    </form></body>
 </html>

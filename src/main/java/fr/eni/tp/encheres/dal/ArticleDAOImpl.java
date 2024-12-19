@@ -47,7 +47,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("nom_article", articles.getNomArticle());
-		map.addValue("description", articles.getDescritpion());
+		map.addValue("description", articles.getDescription());
 		map.addValue("date_debut_encheres", articles.getDateDebutEncheres());
 		map.addValue("date_fin_encheres", articles.getDateFinEncheres());
 		map.addValue("prix_initial", articles.getMiseAPrix());
@@ -96,9 +96,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			ArticlesVendu a = new ArticlesVendu();
 			a.setNoArticle(rs.getLong("no_article"));
 			a.setNomArticle(rs.getString("nom_article"));
-			a.setDescritpion(rs.getString("description"));
-			a.setDateDebutEncheres(rs.getString("date_debut_encheres"));
-			a.setDateFinEncheres(rs.getString("date_fin_encheres"));
+			a.setDescription(rs.getString("description"));
+			a.setDateDebutEncheres(rs.getTimestamp("date_debut_encheres").toLocalDateTime());
+			a.setDateFinEncheres(rs.getTimestamp("date_fin_encheres").toLocalDateTime());
 			a.setMiseAPrix(rs.getInt("prix_initial"));
 			a.setPrixVente(rs.getInt("prix_vente"));
 			

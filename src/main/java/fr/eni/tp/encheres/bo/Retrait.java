@@ -18,6 +18,9 @@ public class Retrait implements Serializable {
 		this.codePostal = codePostal;
 		this.ville = ville;
 	}
+	public Retrait() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getRue() {
 		return rue;
 	}

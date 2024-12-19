@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.exception.BusinessException;
 
 public interface ArticleService {
 	
@@ -14,6 +15,6 @@ public interface ArticleService {
 	List<Categorie> consulterCategorie();
 	Categorie consulterCategorieParNo(long noCategorie);
 	
-	//void creerArticle(ArticlesVendu article) throws BusinessException;
+	void creerArticle(ArticlesVendu article) throws BusinessException;
 
 }

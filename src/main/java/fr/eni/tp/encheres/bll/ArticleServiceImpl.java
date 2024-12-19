@@ -8,6 +8,7 @@ import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
 import fr.eni.tp.encheres.dal.ArticleDAO;
 import fr.eni.tp.encheres.dal.CategorieDAO;
+import fr.eni.tp.encheres.exception.BusinessException;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -47,9 +48,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 
-	/*@Override
+	@Override
 	public void creerArticle(ArticlesVendu article) throws BusinessException {
 		BusinessException be = new BusinessException();
+		this.articleDAO.create(article);
 	 
 		
 	}
@@ -57,9 +59,9 @@ public class ArticleServiceImpl implements ArticleService {
 	private boolean validerArticleUnique(boolean etatVente, BusinessException be) {
 		boolean etatVenteArticle = this.articleDAO.etatVenteArticle(etatVente);
 		
-		return null;
+		return true;
 		
-	}*/
+	}
 	
 
 
