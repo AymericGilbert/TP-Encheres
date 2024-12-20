@@ -36,7 +36,6 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/...").hasAnyRole("USER")
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())

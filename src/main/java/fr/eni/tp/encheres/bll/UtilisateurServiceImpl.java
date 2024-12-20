@@ -16,8 +16,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private UtilisateurDAO utilisateurDAO;
 
 	@Override
-	public Utilisateur findByPseudo(String pseudoUtilisateur) {
-		return utilisateurDAO.read(pseudoUtilisateur);
+	public Utilisateur findByEmail(String emailUtilisateur) {
+		return utilisateurDAO.read(emailUtilisateur);
 	}
 
 	@Override

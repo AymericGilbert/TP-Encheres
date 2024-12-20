@@ -7,7 +7,7 @@ public interface UtilisateurService {
 	
 	void add(Utilisateur nouvelUtilisateur) throws BusinessException;
 	
-	Utilisateur findByPseudo(String pseudoUtilisateur);
+	Utilisateur findByEmail(String pseudoUtilisateur);
 	
 	void update(Utilisateur utilisateur);
 	

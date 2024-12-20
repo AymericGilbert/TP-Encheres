@@ -12,7 +12,7 @@ import fr.eni.tp.encheres.bo.Utilisateur;
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private static String FIND_BY_PSEUDO = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static String FIND_BY_EMAIL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS WHERE email = :email";
 	
 	private static String INSERT  = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) "
 									+ "VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :code_postal, :ville, :mot_de_passe, :credit, :administrateur)";
@@ -33,10 +33,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 }
 
 	@Override
-	public Utilisateur read(String pseudoUtilisateur) {
+	public Utilisateur read(String emailUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		map.addValue("pseudo", pseudoUtilisateur);
-		return this.jdbcTemplate.queryForObject(FIND_BY_PSEUDO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
+		map.addValue("email", emailUtilisateur);
+		
+		// TO DO : remplacer le beanRowMapper par UtilissateurRowMapper
+		return this.jdbcTemplate.queryForObject(FIND_BY_EMAIL, map, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 	@Override

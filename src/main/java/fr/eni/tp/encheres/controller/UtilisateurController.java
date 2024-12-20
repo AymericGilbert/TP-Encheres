@@ -43,7 +43,7 @@ public class UtilisateurController {
     }
     
     @GetMapping("/mon-profil")
-    public String afficherMonProfil(@SessionAttribute(name = "utilisateur", required = false) Utilisateur utilisateur, Model model) {
+    public String afficherMonProfil(@ModelAttribute(name = "utilisateurSession") Utilisateur utilisateur, Model model) {
     	if (utilisateur == null) {
             // L'utilisateur n'est pas connecté, on redirige vers la page login
             return "redirect:/";
@@ -55,9 +55,9 @@ public class UtilisateurController {
     
     @GetMapping("/session")
     public String enregistrementSession(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Principal principal) {
-    	Utilisateur utilisateur = utilisateurService.findByPseudo(principal.getName());
+    	Utilisateur utilisateur = utilisateurService.findByEmail(principal.getName());
     	
-    	if (utilisateurSession != null) {
+    	if (utilisateur != null) {
     		utilisateurSession.setPseudo(utilisateur.getPseudo());
     		utilisateurSession.setNom(utilisateur.getNom());
     		utilisateurSession.setPrenom(utilisateur.getPrenom());
@@ -67,7 +67,7 @@ public class UtilisateurController {
     		utilisateurSession.setCodePostal(utilisateur.getCodePostal());
     		utilisateurSession.setVille(utilisateur.getVille());
     		utilisateurSession.setMotDePasse(utilisateur.getMotDePasse());
-    		System.out.println("L'utilisateur" + utilisateurSession.getPseudo() + "est bien enregistré dans la session");
+    		System.out.println("L'utilisateur " + utilisateurSession.getPseudo() + " est bien enregistré dans la session");
 			return "redirect:/";
 		}
     	
