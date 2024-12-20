@@ -36,7 +36,7 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/...").hasAnyRole("USER")//ADMIN
+					.requestMatchers("/...").hasAnyRole("ADMIN")
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
