@@ -36,7 +36,7 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/...").hasAnyRole("ADMIN")
+					.requestMatchers("/...").hasAnyRole("USER")
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
@@ -44,6 +44,7 @@ public class SecuriteConfig {
 			//personnalise la connexion 
 			.formLogin(form -> form
 					.loginPage("/login")
+					.defaultSuccessUrl("/session")
 					.permitAll())
 			.logout(logout -> logout
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout" , "GET")) // defini l'url permettant de se deconnecter
