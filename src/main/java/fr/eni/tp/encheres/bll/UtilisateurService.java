@@ -13,6 +13,7 @@ public interface UtilisateurService {
 	
 	void deduireCredit(long noUtilisateur, int montantEnchere);
 
-    void rembourserPoints(long noUtilisateurs, int montantEnchere);
+	void rembourserPoints(long noUtilisateurs, int montantEnchere);
+	
 	
 }

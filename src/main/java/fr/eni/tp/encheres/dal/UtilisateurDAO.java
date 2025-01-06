@@ -14,9 +14,11 @@ public interface UtilisateurDAO {
 	
 	Utilisateur findUtilisateur();
 	
-	void updateCredit(long noUtilisateur, int credit );
 
-    int totalCreditUtilisateur(long noUtilisateur);
-    
-    Utilisateur readByNoUtilisateur(long noUtilisateur);
+	Utilisateur readByNoUtilisateur(long noUtilisateur);
+	
+	void updateCredit(long noUtilisateur, int credit );
+	
+	int totalCreditUtilisateur(long noUtilisateur);
+
 }

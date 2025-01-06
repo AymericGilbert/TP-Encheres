@@ -35,6 +35,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	
 	private static String COUNT_BY_ARTICLE  = "SELECT COUNT (*) FROM ARTICLES_VENDUS WHERE nom_article = :nom_article";
 	
+	private static String  UPDATE  = "UPDATE ARTICLES_VENDUS SET prix_vente = :prix_vente  WHERE no_article = :prix_vente";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -61,7 +62,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		}
 	}
 
-	@Override
+	@Override 
 	public ArticlesVendu read(long noArticle) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("no_article", noArticle);
@@ -115,6 +116,17 @@ public class ArticleDAOImpl implements ArticleDAO {
 		}
 		
 		
+	}
+
+
+	@Override
+	public void update(ArticlesVendu articlesVendu) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("prixVente", articlesVendu.getPrixVente());
+        map.addValue("noArticle", articlesVendu.getNoArticle());
+
+        jdbcTemplate.update(UPDATE, map);
+  
 	}
 
 	

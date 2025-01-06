@@ -59,4 +59,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDAO.updateCredit(noUtilisateurs, creditsActuels + montantEnchere);
 		}
 	
+	
+	
 }

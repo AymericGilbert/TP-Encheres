@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.dal.ArticleDAO;
 import fr.eni.tp.encheres.dal.CategorieDAO;
 import fr.eni.tp.encheres.exception.BusinessException;
@@ -15,11 +16,13 @@ public class ArticleServiceImpl implements ArticleService {
 
 	private ArticleDAO articleDAO;
 	private CategorieDAO categorieDAO;
+	private UtilisateurService utilisateurService;
 	
 	
-	public ArticleServiceImpl(ArticleDAO articleDAO, CategorieDAO categorieDAO) {
+	public ArticleServiceImpl(ArticleDAO articleDAO, CategorieDAO categorieDAO, UtilisateurService utilisateurService) {
 		this.articleDAO = articleDAO;
 		this.categorieDAO = categorieDAO;
+		this.utilisateurService = utilisateurService;
 	}
 
 
@@ -55,13 +58,34 @@ public class ArticleServiceImpl implements ArticleService {
 	 
 		
 	}
- 
-	private boolean validerArticleUnique(boolean etatVente, BusinessException be) {
+
+
+	@Override
+	public void encherir(long noArticle, String pseudo, int montantEnchere) throws Exception {
+		System.out.println(noArticle +" - " + pseudo + " - " + montantEnchere);
+		
+		ArticlesVendu article = articleDAO.read(noArticle);
+		Utilisateur utilisateur = utilisateurService.findByPseudo(pseudo);
+		
+		if (montantEnchere <= article.getMiseAPrix()) {
+			throw new Exception("l'enchere doit etre superieur au prix de vente");
+		}
+		if (montantEnchere > utilisateur.getCredit()) {
+			throw new Exception("vous n'avez pas assez de credits");
+		}
+		
+		
+	}
+	
+	
+	
+	
+	/*private boolean validerArticleUnique(boolean etatVente, BusinessException be) {
 		boolean etatVenteArticle = this.articleDAO.etatVenteArticle(etatVente);
 		
 		return true;
 		
-	}
+	}*/
 	
 
 

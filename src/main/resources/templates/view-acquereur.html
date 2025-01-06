@@ -10,6 +10,31 @@ affichage different en fonction de l'utilisteur ou membre vainqueur></!-->
 <title>Insert title here</title>
 </head>
 <body>
+	 <h1>ENI-Enchères</h1>
+     <h2>Détail vente</h2>
+
+	<section>
+		<h3 th:text="${article.nomArticle}"></h3>
+        <p><strong>Description :</strong> <span th:text="${article.description}"></span></p>
+        <p><strong>Catégorie :</strong> <span th:text="${article.categorieArticle.libelle}"></span></p>
+        <p><strong>Meilleure offre :</strong> <span th:text="${article.prixVente}"></span> points</p>
+        <p><strong>Mise à prix :</strong> <span th:text="${article.miseAPrix}"></span> points</p>
+        <p><strong>Fin de l'enchère :</strong> <span th:text="${article.dateFinEncheres}"></span></p>
+        <!--<p><strong>Retrait :</strong> <span th:text="${article.lieuRetrait.adresse}"></span></p>></!-->
+        <p><strong>Vendeur :</strong> <span th:text="${article.vendeur.pseudo}"></span></p>
+		
+		
+		<form th:action="@{/article/{noArticle}/encherir(noArticle=${article.noArticle})}" method="post" th:object="${encheres}">
+    		<!-- Champ pour entrer la proposition d'enchère -->
+    		<label for="encherit">Ma proposition :</label>
+    		<input type="number" id="encherit" th:field="*{montantEnchere}" placeholder="Montant en credit" required>
+
+    		<!-- Bouton pour soumettre l'enchère -->
+    		<button type="submit">Enchérir</button>
+		</form>
+
+	</section>
+
 
 </body>
 </html>

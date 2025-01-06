@@ -1,19 +1,23 @@
 package fr.eni.tp.encheres.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.eni.tp.encheres.bll.ArticleService;
 import fr.eni.tp.encheres.bll.UtilisateurService;
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.bo.Enchere;
 import fr.eni.tp.encheres.bo.Retrait;
 import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.exception.BusinessException;
@@ -100,5 +104,35 @@ public class EnchereController {
 		}
 	       
 	        return "redirect:/";
+	    }    
+	    
+	    // methode pour view-acquereur
+	    
+	    
+	    //reprendre  pages enchere manque methode sur utilisateurDAO (findbypseudo )
+	    //methode boolean pour faire enchere sur article service prenant noarticle pseudo et l'attribut de la classe retrait (private Utilisateur encherit;)
+	    //plus methode controller get et post qui vont bien
+	    
+	    @GetMapping("/view-acquereur")
+	    public String afficherDetailsArticle(@RequestParam("noArticle") long noArticle, Model model) {
+	        ArticlesVendu article = articleService.consulterArticleParNo(noArticle);
+	        model.addAttribute("article", article);
+	        Enchere encheres = new Enchere();
+	        model.addAttribute("encheres", encheres);
+	        return "view-acquereur";
 	    }
+	    
+	  @PostMapping("/article/{noArticle}/encherir")
+	  public String faireEnchere(@PathVariable("noArticle") long noArticle, @ModelAttribute Enchere encheres, Principal principal, Model model) {
+		  String pseudo = principal.getName();
+		  
+		  try {
+	            articleService.encherir(noArticle, pseudo, encheres.getMontantEnchere());
+	            model.addAttribute("success", "Enchère soumise avec succès !");
+	        } catch (Exception e) {
+	            model.addAttribute("error", e.getMessage());
+	        }
+		  
+		  return "redirect:/index" + noArticle;
+	  }
 }

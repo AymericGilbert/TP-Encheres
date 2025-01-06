@@ -105,6 +105,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return (Utilisateur) this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
+
 	@Override
 	public void updateCredit(long noUtilisateur, int credit) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
@@ -128,6 +129,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         map.addValue("noUtilisateur", noUtilisateur);
 
         return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
+
+	
 	}
 
 }
