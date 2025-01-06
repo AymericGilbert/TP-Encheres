@@ -36,6 +36,8 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
+					.requestMatchers("/mon-profil-creation").permitAll() // MODIF
+					.requestMatchers("/session").permitAll() // MODIF
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
@@ -48,6 +50,7 @@ public class SecuriteConfig {
 			.logout(logout -> logout
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout" , "GET")) // defini l'url permettant de se deconnecter
 					.addLogoutHandler(clearSiteData)// vide les donnee de l'utilisateur
+					.logoutSuccessUrl("/") // MODIF
 					)	
 			;
 		

@@ -39,7 +39,7 @@ public class UtilisateurController {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-        return "redirect:/index"; // Une page de confirmation ou un autre traitement
+        return "redirect:/";
     }
     
     @GetMapping("/mon-profil")
@@ -48,7 +48,6 @@ public class UtilisateurController {
             // L'utilisateur n'est pas connecté, on redirige vers la page login
             return "redirect:/";
         }
-
         model.addAttribute("utilisateur", utilisateur);
         return "mon-profil"; 
     }
@@ -67,6 +66,7 @@ public class UtilisateurController {
     		utilisateurSession.setCodePostal(utilisateur.getCodePostal());
     		utilisateurSession.setVille(utilisateur.getVille());
     		utilisateurSession.setMotDePasse(utilisateur.getMotDePasse());
+    		utilisateurSession.setCredit(utilisateur.getCredit());
     		System.out.println("L'utilisateur " + utilisateurSession.getPseudo() + " est bien enregistré dans la session");
 			return "redirect:/";
 		}
@@ -78,6 +78,12 @@ public class UtilisateurController {
     @ModelAttribute("utilisateurSession")
     public Utilisateur mettreEnSessionUtilisateur() {
     	return new Utilisateur();
+    }
+    
+    @GetMapping("/mon-profil-detail")
+    public String viewDetailProfil(@ModelAttribute(name = "utilisateurSession") Utilisateur utilisateur, Model model) {
+    	model.addAttribute("utilisateur", utilisateur);
+        return "mon-profil-detail"; 
     }
 	
 	

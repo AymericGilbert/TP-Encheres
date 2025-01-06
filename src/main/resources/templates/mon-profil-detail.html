@@ -1,13 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<!--seras afficher uand l'utilisateur cliquera sur mon profil 
-et renverras vers la page monprofil.html si on clique sur modifier></!-->
-
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<!--seras afficher quand l'utilisateur cliquera sur mon profil 
+	et renverras vers la page monprofil.html si on clique sur modifier></!-->
+	<title>Modification du profil</title>
 </head>
 <body>
+	<section>
+		<form th:action="@{/mon-profil-detail}" th:object="${utilisateur}" method="post">
+			<label for="pseudo">Pseudo :</label>
+    		<input type="text" id="pseudo" th:field="*{pseudo}" value="${utilisateurSession.pseudo}" required ><br>
 
+    		<label for="nom">Nom :</label>
+    		<input type="text" id="nom" th:field="*{nom}" value="${utilisateurSession.nom}" required><br>
+
+    		<label for="prenom">Prénom :</label>
+    		<input type="text" id="prenom" th:field="*{prenom}" value="${utilisateurSession.prenom}" required><br>
+
+    		<label for="email">Email :</label>
+    		<input type="email" id="email" th:field="*{email}" value="${utilisateurSession.email}" required><br>
+
+    		<label for="telephone">Téléphone :</label>
+    		<input type="tel" id="telephone" th:field="*{telephone}" value="${utilisateurSession.telephone}" required><br>
+
+    		<label for="rue">Rue :</label>
+    		<input type="text" id="rue" th:field="*{rue}" value="${utilisateurSession.rue}" required><br>
+
+    		<label for="codePostal">Code Postal :</label>
+    		<input type="text" id="codePostal" th:field="*{codePostal}" value="${utilisateurSession.codePostal}" required><br>
+
+    		<label for="ville">Ville :</label>
+    		<input type="text" id="ville" th:field="*{ville}" value="${utilisateurSession.ville}" required><br>
+			
+			<label for="oldMotDePasse">Mot de passe actuel :</label>
+			<p th:text="${utilisateurSession.motDePasse}"></p>
+			
+    		<label for="newMotDePasse">Nouveau mot de passe :</label>
+    		<input type="password" id="motDePasse" th:field="*{motDePasse}" required><br>
+    		
+    		<label for="credit">Credits :</label>
+			<p th:text="${utilisateurSession.credit}"></p>
+
+    		<button type="submit">Enregistrer</button>
+    		<button type="submit">Supprimer mon compte</button>
+    	</form>
+	</section>
 </body>
 </html>

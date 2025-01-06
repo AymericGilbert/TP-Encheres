@@ -13,4 +13,10 @@ public interface UtilisateurDAO {
 	boolean compteDejaExistant(String nom);
 	
 	Utilisateur findUtilisateur();
+	
+	void updateCredit(long noUtilisateur, int credit );
+
+    int totalCreditUtilisateur(long noUtilisateur);
+    
+    Utilisateur readByNoUtilisateur(long noUtilisateur);
 }

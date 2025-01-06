@@ -45,7 +45,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		//} else {
 		//	throw be;
 		//}
-		
 	}
+
+	@Override
+	public void deduireCredit(long noUtilisateur, int montantEnchere) {
+		int creditsActuels = utilisateurDAO.totalCreditUtilisateur(noUtilisateur);
+		utilisateurDAO.updateCredit(noUtilisateur, creditsActuels - montantEnchere);
+	}
+
+	@Override
+	public void rembourserPoints(long noUtilisateurs, int montantEnchere) {
+		int creditsActuels = utilisateurDAO.totalCreditUtilisateur(noUtilisateurs);
+		utilisateurDAO.updateCredit(noUtilisateurs, creditsActuels + montantEnchere);
+		}
 	
 }

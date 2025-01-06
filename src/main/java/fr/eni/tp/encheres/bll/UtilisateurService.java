@@ -7,8 +7,12 @@ public interface UtilisateurService {
 	
 	void add(Utilisateur nouvelUtilisateur) throws BusinessException;
 	
-	Utilisateur findByEmail(String pseudoUtilisateur);
+	Utilisateur findByEmail(String emailUtilisateur);
 	
 	void update(Utilisateur utilisateur);
+	
+	void deduireCredit(long noUtilisateur, int montantEnchere);
+
+    void rembourserPoints(long noUtilisateurs, int montantEnchere);
 	
 }

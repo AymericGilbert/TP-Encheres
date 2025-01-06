@@ -19,7 +19,7 @@
 	<section>
 		<form th:action="@{/mon-profil-creation}" th:object="${utilisateur}" method="post">
     		<label for="pseudo">Pseudo :</label>
-    		<input type="text" id="pseudo" th:field="*{pseudo}" required><br>
+    		<input type="text" id="pseudo" th:field="*{pseudo}" required ><br>
 
     		<label for="nom">Nom :</label>
     		<input type="text" id="nom" th:field="*{nom}" required><br>

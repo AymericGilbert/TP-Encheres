@@ -25,6 +25,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	
 	private static final String FIND_ALL = "SELECT email, nom, prenom FROM UTILISATEURS";
 	
+	private static final String FIND_BY_NO = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur";
+	
+	private static final String UPDATE_CREDIT_BY_NO = "UPDATE utilisateurs SET credit = :credit WHERE no_utilisateur = :noUtilisateur";
+	
+	private static final String FIND_CREDIT_BY_NO = "SELECT credit FROM utilisateurs WHERE no_utilisateur= :noUtilisateur";
+	
+	
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -96,6 +103,31 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur findUtilisateur() {
 		return (Utilisateur) this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
+	}
+
+	@Override
+	public void updateCredit(long noUtilisateur, int credit) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("credit", credit);
+        map.addValue("noUtilisateur", noUtilisateur);
+
+        this.jdbcTemplate.update(UPDATE_CREDIT_BY_NO, map);
+		
+	}
+
+	@Override
+	public int totalCreditUtilisateur(long noUtilisateur) {
+		 MapSqlParameterSource map = new MapSqlParameterSource();
+	     map.addValue("noUtilisateur", noUtilisateur);
+	     return jdbcTemplate.queryForObject(FIND_CREDIT_BY_NO, map, Integer.class);
+	}
+
+	@Override
+	public Utilisateur readByNoUtilisateur(long noUtilisateur) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("noUtilisateur", noUtilisateur);
+
+        return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 }
