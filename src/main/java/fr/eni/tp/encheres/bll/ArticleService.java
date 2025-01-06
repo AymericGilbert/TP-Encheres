@@ -18,7 +18,7 @@ public interface ArticleService {
 	
 	void creerArticle(ArticlesVendu article) throws BusinessException;
 	
-	void encherir(long noArticle , String pseudo, int montantEnchere) throws Exception;
+	void encherir(long noArticle , String email, int montantEnchere) throws Exception;
 	
 
 	//boolean validerArticleUnique(boolean etatVente);

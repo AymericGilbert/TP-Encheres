@@ -61,11 +61,11 @@ public class ArticleServiceImpl implements ArticleService {
 
 
 	@Override
-	public void encherir(long noArticle, String pseudo, int montantEnchere) throws Exception {
-		System.out.println(noArticle +" - " + pseudo + " - " + montantEnchere);
+	public void encherir(long noArticle, String email, int montantEnchere) throws Exception {
+		System.out.println(noArticle +" - " + email + " - " + montantEnchere);
 		
 		ArticlesVendu article = articleDAO.read(noArticle);
-		Utilisateur utilisateur = utilisateurService.findByPseudo(pseudo);
+		Utilisateur utilisateur = utilisateurService.findByEmail(email);
 		
 		if (montantEnchere <= article.getMiseAPrix()) {
 			throw new Exception("l'enchere doit etre superieur au prix de vente");
