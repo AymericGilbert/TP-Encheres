@@ -18,5 +18,7 @@ public interface ArticleDAO {
 	
 	String findArticle(long noArticle);
 	
-	boolean etatVenteArticle(boolean etatVente);
+	void mettreAJourmeilleurOffre(long noArticle, int montantEnchere);
+	
+	//boolean etatVenteArticle(boolean etatVente);
 }

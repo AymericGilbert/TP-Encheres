@@ -30,6 +30,11 @@ public class EnchereDAOImpl implements EnchereDAO {
 											+ " inner join UTILISATEURS u on e.no_utilisateur = u.no_utilisateur"
 											+ " inner join ARTICLES_VENDUS a on e.no_article = a.no_article WHERE e.no_article = :no_article ";
 	
+	private static String FIND_OFFRE_BY_NO ="SELECT ISNULL(MAX(montant_enchere), 0) FROM ENCHERES WHERE no_article = :noArticle";
+	
+	private static String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) " 
+            								  + "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
+	
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -85,5 +90,23 @@ public class EnchereDAOImpl implements EnchereDAO {
 			return e;
 		}
 		
+	}
+
+	@Override
+	public int laMeilleureOffre(int noArticle) {
+		 MapSqlParameterSource map = new MapSqlParameterSource();
+	        map.addValue("noArticle", noArticle);
+
+	        return jdbcTemplate.queryForObject(FIND_OFFRE_BY_NO, map, Integer.class);
+	}
+
+	@Override
+	public void ajouterEnchere(long noUtilisateur, long noArticle, int montantEnchere) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noUtilisateur", noUtilisateur);
+		map.addValue("noArticle", noArticle);
+		map.addValue("montantEnchere", montantEnchere);
+
+        jdbcTemplate.update(INSERT_ENCHERE, map);
 	}
 }

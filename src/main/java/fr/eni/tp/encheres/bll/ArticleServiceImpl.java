@@ -9,6 +9,7 @@ import fr.eni.tp.encheres.bo.Categorie;
 import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.dal.ArticleDAO;
 import fr.eni.tp.encheres.dal.CategorieDAO;
+import fr.eni.tp.encheres.dal.EnchereDAO;
 import fr.eni.tp.encheres.exception.BusinessException;
 
 @Service
@@ -16,12 +17,18 @@ public class ArticleServiceImpl implements ArticleService {
 
 	private ArticleDAO articleDAO;
 	private CategorieDAO categorieDAO;
+	private EnchereDAO enchereDAO;
 	private UtilisateurService utilisateurService;
 	
 	
-	public ArticleServiceImpl(ArticleDAO articleDAO, CategorieDAO categorieDAO, UtilisateurService utilisateurService) {
+	
+
+
+	public ArticleServiceImpl(ArticleDAO articleDAO, CategorieDAO categorieDAO, EnchereDAO enchereDAO,
+			UtilisateurService utilisateurService) {
 		this.articleDAO = articleDAO;
 		this.categorieDAO = categorieDAO;
+		this.enchereDAO = enchereDAO;
 		this.utilisateurService = utilisateurService;
 	}
 
@@ -73,8 +80,21 @@ public class ArticleServiceImpl implements ArticleService {
 		if (montantEnchere > utilisateur.getCredit()) {
 			throw new Exception("vous n'avez pas assez de credits");
 		}
+		int meilleureOffre = enchereDAO.laMeilleureOffre(montantEnchere);
 		
+		if (montantEnchere <= meilleureOffre) {
+			throw new Exception("L'enchere doit etre superieur au prix de vente actuel");
+		}
+		//pour mettre a jour dans la table
+		enchereDAO.ajouterEnchere(utilisateur.getNoUtilisateur(), noArticle, montantEnchere);
 		
+		//pour MAJ le PDV dans la table articleVendu
+		articleDAO.mettreAJourmeilleurOffre(noArticle, montantEnchere);
+		
+		//pour mettre a jour les credit de l'utilisateur
+		utilisateurService.deduireCredit(utilisateur.getNoUtilisateur(), montantEnchere);
+		
+		System.out.println("enchere réussie" + montantEnchere + " - à  " + utilisateur.getEmail());
 	}
 	
 	

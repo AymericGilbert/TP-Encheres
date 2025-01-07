@@ -117,6 +117,14 @@ public class EnchereController {
 	    public String afficherDetailsArticle(@RequestParam("noArticle") long noArticle, Model model) {
 	        ArticlesVendu article = articleService.consulterArticleParNo(noArticle);
 	        model.addAttribute("article", article);
+	        
+	        if (article == null) {
+	            System.err.println("Aucun article trouvé avec l'ID : " + noArticle);
+	            model.addAttribute("error", "Article introuvable.");
+	            return "redirect:/";
+	        }
+	       System.out.println("Article trouvé" + noArticle);
+	        
 	        Enchere encheres = new Enchere();
 	        model.addAttribute("encheres", encheres);
 	        return "view-acquereur";
@@ -125,14 +133,15 @@ public class EnchereController {
 	  @PostMapping("/article/{noArticle}/encherir")
 	  public String faireEnchere(@PathVariable("noArticle") long noArticle, @ModelAttribute Enchere encheres, Principal principal, Model model) {
 		  String pseudo = principal.getName();
-		  
+		  System.out.println("enchere effectuer" + pseudo);
 		  try {
 	            articleService.encherir(noArticle, pseudo, encheres.getMontantEnchere());
 	            model.addAttribute("success", "Enchère soumise avec succès !");
 	        } catch (Exception e) {
 	            model.addAttribute("error", e.getMessage());
+	            System.err.println("Erreur lors de l'enchère : " + e.getMessage());
 	        }
 		  
-		  return "redirect:/index" + noArticle;
+		  return "redirect:/view-acquereur?noArticle=" + noArticle ;
 	  }
 }
