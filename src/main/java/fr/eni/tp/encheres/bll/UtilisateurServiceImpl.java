@@ -22,6 +22,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public void update(Utilisateur utilisateur) throws BusinessException {
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String passwordCrypt = passwordEncoder.encode(utilisateur.getMotDePasse());
+		utilisateur.setMotDePasse(passwordCrypt);
 		utilisateurDAO.update(utilisateur);	
 	}
 	

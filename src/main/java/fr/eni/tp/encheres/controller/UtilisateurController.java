@@ -55,7 +55,7 @@ public class UtilisateurController {
     @GetMapping("/session")
     public String enregistrementSession(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Principal principal) {
     	Utilisateur utilisateur = utilisateurService.findByEmail(principal.getName());
-    	
+    	System.out.println(utilisateur);
     	if (utilisateur != null) {
     		utilisateurSession.setPseudo(utilisateur.getPseudo());
     		utilisateurSession.setNom(utilisateur.getNom());
@@ -68,6 +68,7 @@ public class UtilisateurController {
     		utilisateurSession.setMotDePasse(utilisateur.getMotDePasse());
     		utilisateurSession.setCredit(utilisateur.getCredit());
     		utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
+    		System.out.println(utilisateurSession.getNoUtilisateur());
     		System.out.println("L'utilisateur " + utilisateurSession.getPseudo() + " est bien enregistré dans la session");
 			return "redirect:/";
 		}
@@ -101,6 +102,7 @@ public class UtilisateurController {
     @PostMapping("/deleteUtilisateur")
     public String supprimerCompte(@ModelAttribute Utilisateur utilisateur) {
     	try {
+    		System.out.println("Notre utilisateur : " + utilisateur);
 			this.utilisateurService.delete(utilisateur);
 			
 		} catch (BusinessException e) {

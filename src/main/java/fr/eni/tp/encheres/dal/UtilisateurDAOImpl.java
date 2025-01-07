@@ -12,7 +12,7 @@ import fr.eni.tp.encheres.bo.Utilisateur;
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private static String FIND_BY_EMAIL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit FROM UTILISATEURS WHERE email = :email";
+	private static String FIND_BY_EMAIL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, no_utilisateur FROM UTILISATEURS WHERE email = :email";
 	
 	private static String INSERT  = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) "
 									+ "VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :code_postal, :ville, :mot_de_passe, :credit, :administrateur)";
@@ -44,7 +44,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("email", emailUtilisateur);
 		
-		// TO DO : remplacer le beanRowMapper par UtilissateurRowMapper
+		// TO DO : remplacer le beanRowMapper par UtilisateurRowMapper
 		return this.jdbcTemplate.queryForObject(FIND_BY_EMAIL, map, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
@@ -93,6 +93,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		map.addValue("code_postal", utilisateur.getCodePostal());
 		map.addValue("ville", utilisateur.getVille());
 		map.addValue("mot_de_passe", utilisateur.getMotDePasse());
+		map.addValue("no_utilisateur", utilisateur.getNoUtilisateur());
 		
 		this.jdbcTemplate.update(UPDATE, map);
 	}
