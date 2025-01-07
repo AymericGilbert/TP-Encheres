@@ -75,15 +75,15 @@ public class SecuriteConfig {
 			return new InMemoryUserDetailsManager(user, admin);
 	}
 	
-		@Bean
-		public UserDetailsService userDetailsService(DataSource dataSource) {
-			JdbcUserDetailsManager  jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+	@Bean
+	public UserDetailsService userDetailsService(DataSource dataSource) {
+		JdbcUserDetailsManager  jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 			
-			//cofiguration de la requete permettant de verifier que l'utilisateur est autorisé à se connecter
-			jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT email, mot_de_passe, 1 FROM UTILISATEURS WHERE email = ?");
-			jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT email, CASE administrateur WHEN 1 THEN 'ADMIN' WHEN 0 THEN 'USER' END FROM UTILISATEURS WHERE email = ?");
+		//cofiguration de la requete permettant de verifier que l'utilisateur est autorisé à se connecter
+		jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT email, mot_de_passe, 1 FROM UTILISATEURS WHERE email = ?");
+		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT email, CASE administrateur WHEN 1 THEN 'ADMIN' WHEN 0 THEN 'USER' END FROM UTILISATEURS WHERE email = ?");
 			
-			return jdbcUserDetailsManager;
-		}
+		return jdbcUserDetailsManager;
+	}
 		
 }		

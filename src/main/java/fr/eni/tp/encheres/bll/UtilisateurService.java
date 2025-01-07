@@ -9,7 +9,9 @@ public interface UtilisateurService {
 	
 	Utilisateur findByEmail(String emailUtilisateur);
 	
-	void update(Utilisateur utilisateur);
+	void update(Utilisateur utilisateur) throws BusinessException;
+	
+	void delete(Utilisateur utilisateur) throws BusinessException;
 	
 	void deduireCredit(long noUtilisateur, int montantEnchere);
 

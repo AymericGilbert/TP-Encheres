@@ -31,7 +31,7 @@ public class UtilisateurController {
         return "mon-profil-creation";
     }
 
-    @PostMapping("/mon-profil-creation")
+    @PostMapping("/creationUtilisateur")
     public String creerUtilisateur(@ModelAttribute Utilisateur nouvelUtilisateur) {
     	try {
 			this.utilisateurService.add(nouvelUtilisateur);
@@ -43,7 +43,7 @@ public class UtilisateurController {
     }
     
     @GetMapping("/mon-profil")
-    public String afficherMonProfil(@ModelAttribute(name = "utilisateurSession") Utilisateur utilisateur, Model model) {
+    public String afficherMonProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateur, Model model) {
     	if (utilisateur == null) {
             // L'utilisateur n'est pas connecté, on redirige vers la page login
             return "redirect:/";
@@ -67,6 +67,7 @@ public class UtilisateurController {
     		utilisateurSession.setVille(utilisateur.getVille());
     		utilisateurSession.setMotDePasse(utilisateur.getMotDePasse());
     		utilisateurSession.setCredit(utilisateur.getCredit());
+    		utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
     		System.out.println("L'utilisateur " + utilisateurSession.getPseudo() + " est bien enregistré dans la session");
 			return "redirect:/";
 		}
@@ -81,9 +82,31 @@ public class UtilisateurController {
     }
     
     @GetMapping("/mon-profil-detail")
-    public String viewDetailProfil(@ModelAttribute(name = "utilisateurSession") Utilisateur utilisateur, Model model) {
+    public String viewDetailProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateur, Model model) {
     	model.addAttribute("utilisateur", utilisateur);
         return "mon-profil-detail"; 
+    }
+    
+    @PostMapping("/mon-profil-detail")
+    public String modifierUtilisateur(@ModelAttribute Utilisateur utilisateur) {
+    	try {
+			this.utilisateurService.update(utilisateur);
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+        return "redirect:/session";
+    }
+    
+    @PostMapping("/deleteUtilisateur")
+    public String supprimerCompte(@ModelAttribute Utilisateur utilisateur) {
+    	try {
+			this.utilisateurService.delete(utilisateur);
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+        return "redirect:/login";
     }
 	
 	

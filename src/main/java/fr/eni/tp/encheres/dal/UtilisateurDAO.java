@@ -10,11 +10,12 @@ public interface UtilisateurDAO {
 	
 	void update(Utilisateur utilisateur);
 	
+	void delete(Utilisateur utilisateur);
+	
 	boolean compteDejaExistant(String nom);
 	
 	Utilisateur findUtilisateur();
 	
-
 	Utilisateur readByNoUtilisateur(long noUtilisateur);
 	
 	void updateCredit(long noUtilisateur, int credit );

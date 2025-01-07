@@ -21,8 +21,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void update(Utilisateur utilisateur) {
+	public void update(Utilisateur utilisateur) throws BusinessException {
 		utilisateurDAO.update(utilisateur);	
+	}
+	
+	@Override
+	public void delete(Utilisateur utilisateur) throws BusinessException {
+		utilisateurDAO.delete(utilisateur);
 	}
 
 	@Override
@@ -58,7 +63,5 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		int creditsActuels = utilisateurDAO.totalCreditUtilisateur(noUtilisateurs);
 		utilisateurDAO.updateCredit(noUtilisateurs, creditsActuels + montantEnchere);
 		}
-	
-	
 	
 }

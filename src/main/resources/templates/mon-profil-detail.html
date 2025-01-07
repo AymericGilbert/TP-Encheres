@@ -33,7 +33,7 @@
     		<label for="ville">Ville :</label>
     		<input type="text" id="ville" th:field="*{ville}" value="${utilisateurSession.ville}" required><br>
 			
-			<label for="oldMotDePasse">Mot de passe actuel :</label>
+			<label for="motDePasse">Mot de Passe actuel :</label>
 			<p th:text="${utilisateurSession.motDePasse}"></p>
 			
     		<label for="newMotDePasse">Nouveau mot de passe :</label>
@@ -43,6 +43,9 @@
 			<p th:text="${utilisateurSession.credit}"></p>
 
     		<button type="submit">Enregistrer</button>
+    		
+    	</form>
+    	<form th:action="@{/deleteUtilisateur}" method="post">
     		<button type="submit">Supprimer mon compte</button>
     	</form>
 	</section>
