@@ -13,4 +13,8 @@ public interface EnchereDAO {
 	void annulerVente(long noArticle);
 	
 	Enchere read(long noArticle);
+	
+	int laMeilleureOffre(int noArticle);
+	
+	void ajouterEnchere(long noUtilisateur, long noArticle, int montantEnchere);
 }

@@ -21,13 +21,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 			                            + " ( :nom_article, :description, :date_debut_encheres,:date_fin_encheres , :prix_initial, :prix_vente, :no_utilisateur, :no_categorie)";
 	
 	private static String FIND_BY_NO  = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
-			      							+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS a "
+			      							+ " u.no_utilisateur, c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
 			      							+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
 			      							+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie WHERE a.no_article = :no_article ";
 			
 	
 	private static String FIND_ALL = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
-									 	+ " u.no_utilisateur, c.no_categorie FROM ARTICLES_VENDUS a "
+									 	+ " u.no_utilisateur, c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
 									 	+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
 									 	+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie ";
 	
@@ -36,6 +36,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static String COUNT_BY_ARTICLE  = "SELECT COUNT (*) FROM ARTICLES_VENDUS WHERE nom_article = :nom_article";
 	
 	private static String  UPDATE  = "UPDATE ARTICLES_VENDUS SET prix_vente = :prix_vente  WHERE no_article = :prix_vente";
+	
+	private static String UPDATE_PRIX = "UPDATE ARTICLES_VENDUS SET prix_vente = :montantEnchere WHERE no_article = :noArticle";
+
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -109,6 +112,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			
 			Categorie categorie = new Categorie();
 			categorie.setNoCategorie(rs.getLong("no_categorie"));
+			categorie.setLibelle(rs.getString("libelle"));
 			a.setCategorieArticle(categorie);
 			
 			
@@ -127,6 +131,15 @@ public class ArticleDAOImpl implements ArticleDAO {
 
         jdbcTemplate.update(UPDATE, map);
   
+	}
+	@Override
+	public void mettreAJourmeilleurOffre(long noArticle, int montantEnchere) {
+		 MapSqlParameterSource map = new MapSqlParameterSource();
+		 map.addValue("montantEnchere", montantEnchere);
+		 map.addValue("noArticle", noArticle);
+
+	        jdbcTemplate.update(UPDATE_PRIX, map);
+		
 	}
 
 	
