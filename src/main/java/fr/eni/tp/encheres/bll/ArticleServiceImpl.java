@@ -93,7 +93,6 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		//pour mettre a jour les credit de l'utilisateur
 		utilisateurService.deduireCredit(utilisateur.getNoUtilisateur(), montantEnchere);
-		
 		System.out.println("enchere réussie" + montantEnchere + " - à  " + utilisateur.getEmail());
 	}
 	

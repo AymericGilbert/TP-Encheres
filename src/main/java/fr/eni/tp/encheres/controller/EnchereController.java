@@ -132,11 +132,14 @@ public class EnchereController {
 	    
 	  @PostMapping("/article/{noArticle}/encherir")
 	  public String faireEnchere(@PathVariable("noArticle") long noArticle, @ModelAttribute Enchere encheres, Principal principal, Model model) {
-		  String pseudo = principal.getName();
-		  System.out.println("enchere effectuer" + pseudo);
+		  String email = principal.getName();
+		  System.out.println("enchere effectuer" + email);
+		  Utilisateur utilisateur = utilisateurService.findByEmail(email);
+		  model.addAttribute("utilisateur", utilisateur);
+		  
 		  try {
-	            articleService.encherir(noArticle, pseudo, encheres.getMontantEnchere());
-	            model.addAttribute("success", "Enchère soumise avec succès !");
+	            articleService.encherir(noArticle, email, encheres.getMontantEnchere());
+	            model.addAttribute("success", "Enchère soumise avec succès !" + email);
 	        } catch (Exception e) {
 	            model.addAttribute("error", e.getMessage());
 	            System.err.println("Erreur lors de l'enchère : " + e.getMessage());

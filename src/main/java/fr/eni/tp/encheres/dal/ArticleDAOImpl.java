@@ -38,6 +38,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static String  UPDATE  = "UPDATE ARTICLES_VENDUS SET prix_vente = :prix_vente  WHERE no_article = :prix_vente";
 	
 	private static String UPDATE_PRIX = "UPDATE ARTICLES_VENDUS SET prix_vente = :montantEnchere WHERE no_article = :noArticle";
+	
+	
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;

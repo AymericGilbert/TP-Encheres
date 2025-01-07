@@ -15,7 +15,7 @@ import fr.eni.tp.encheres.bo.Utilisateur;
 @Repository
 public class EnchereDAOImpl implements EnchereDAO {
 
-	private static String INSERT = "INSERT INTO [ENCHERES] (no_utilisateur, no_article, date_enchere, montant_enchere)"
+	private static String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)"
 								 + " VALUES (:no_utilisateur, :no_article, :date_enchere, :montant_enchere);";
 	
 	private static String FIND_ALL  = "SELECT e.date_enchere, e.montant_enchere,"
@@ -32,9 +32,13 @@ public class EnchereDAOImpl implements EnchereDAO {
 	
 	private static String FIND_OFFRE_BY_NO ="SELECT ISNULL(MAX(montant_enchere), 0) FROM ENCHERES WHERE no_article = :noArticle";
 	
-	private static String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) " 
-            								  + "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
+	private static String SELECT_COUNT = "SELECT COUNT(*) FROM ENCHERES WHERE no_utilisateur = :noUtilisateur AND no_article = :noArticle";
 	
+	private static String UPDATE_SET = "UPDATE ENCHERES SET montant_enchere = :montantEnchere, date_enchere = GETDATE() "
+										+  "WHERE no_utilisateur = :noUtilisateur AND no_article = :noArticle";
+	
+	private static String INSERT_GETDATE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) "
+            								+ "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -93,7 +97,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 	}
 
 	@Override
-	public int laMeilleureOffre(int noArticle) {
+	public int laMeilleureOffre(long noArticle) {
 		 MapSqlParameterSource map = new MapSqlParameterSource();
 	        map.addValue("noArticle", noArticle);
 
@@ -105,8 +109,14 @@ public class EnchereDAOImpl implements EnchereDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
 		map.addValue("noArticle", noArticle);
-		map.addValue("montantEnchere", montantEnchere);
-
-        jdbcTemplate.update(INSERT_ENCHERE, map);
+		     
+		int count = jdbcTemplate.queryForObject(SELECT_COUNT, map, Integer.class);
+		if (count > 0) {
+			map.addValue("montantEnchere", montantEnchere);
+			jdbcTemplate.update(UPDATE_SET, map);
+		}else {
+			map.addValue("montantEnchere", montantEnchere);
+			jdbcTemplate.update(INSERT_GETDATE, map);
+		}
 	}
 }
