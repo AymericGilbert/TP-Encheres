@@ -67,7 +67,7 @@ public class SecuriteConfig {
 				.password(passwordChiffre)
 				.roles("USER")
 				.build();
-			UserDetails admin = User.builder()
+		UserDetails admin = User.builder()
 				.username("admin")
 				.password(passwordChiffre)
 				.roles("USER", "ADMIN")

@@ -7,6 +7,7 @@
 	<title>Modification du profil</title>
 </head>
 <body>
+	<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
 	<section>
 		<form th:action="@{/mon-profil-detail}" th:object="${utilisateur}" method="post">
 			<label for="pseudo">Pseudo :</label>
