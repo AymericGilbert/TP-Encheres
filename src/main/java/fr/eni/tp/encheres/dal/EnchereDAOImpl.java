@@ -40,6 +40,8 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private static String INSERT_GETDATE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) "
             								+ "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
 	
+	
+	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -119,4 +121,6 @@ public class EnchereDAOImpl implements EnchereDAO {
 			jdbcTemplate.update(INSERT_GETDATE, map);
 		}
 	}
+
+	
 }

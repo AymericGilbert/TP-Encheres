@@ -19,9 +19,9 @@
 	
 	 <div>
         <h3>Filtres :</h3>
-        <form th:action="@{/vendre-article}" method="POST" th:object="${articleVendus}">
+        <form th:action="@{/}" method="POST" th:object="${article}">
             <label for="search">Le nom de l'article contient :</label>
-            <input type="text" th:field="*{nomArticle}" id="search" name="search">
+            <input type="text" th:field="*{nomArticle}" id="search" >
             
             <label for="categorie">Catégorie :</label>
             <select th:field="*{categorieArticle}">
@@ -35,10 +35,11 @@
 	
 	<div style="display: flex; flex-wrap: wrap; gap: 20px;">
     <div th:each="article : ${articles}" style="border: 1px solid black; width: 300px; padding: 10px; box-shadow: 2px 2px 5px grey;">
-        <h3 th:text="${article.nomArticle}">Nom de l'article</h3>
+        <h3 th:text="${article.nomArticle}"><a th:href="@{/vue-acquereur/{id}(id=${article.noArticle})}"></a>Nom de l'article</h3>
         <p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
         <p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
         <p>Vendeur : <span th:text="${article.vendeur.pseudo }"></span></p>
+        <a th:href="@{/vue-acquereur/{id}(id=${article.noArticle})}">Voir l'enchère</a>
     </div>
 </div>
 </body>

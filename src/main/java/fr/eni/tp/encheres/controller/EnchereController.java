@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -41,7 +42,7 @@ public class EnchereController {
 	// page d'acceuil
 	@GetMapping
 	public String afficherEnchere(Model model) {
-		model.addAttribute("articleVendus", new ArticlesVendu());
+		model.addAttribute("article", new ArticlesVendu());
 
 	    List<ArticlesVendu> articleVendus = this.articleService.consulterArticles();
 	    model.addAttribute("articles", articleVendus);
@@ -52,6 +53,23 @@ public class EnchereController {
 	    return "index";
 		
 	}
+		// rechercher
+		@RequestMapping(value = "/rechercher", method = {RequestMethod.GET, RequestMethod.POST})
+	    public String rechercherEncheres(@RequestParam(name ="nomArticle", required = false) String nomArticle,
+	    								 @RequestParam(name ="no_categorie", required = false) Long no_categorie,
+	    								 Model model ) {
+	  
+		    if (nomArticle == null) nomArticle = "";
+		    if (no_categorie == null) no_categorie = 0L;
+		  
+	        List<ArticlesVendu> encheres = articleService.rechercherEncheres(nomArticle, no_categorie);
+	        model.addAttribute("encheres", encheres);
+	        
+	        model.addAttribute("categories", articleService.consulterCategorie());
+	        
+	        return "index"; 
+	    }
+	 
 	
 	@ModelAttribute("categorieSession")
 	public List<Categorie> consulterCategorie(){
@@ -59,20 +77,29 @@ public class EnchereController {
 	}
 	
 	@PostMapping("/")
-	public String traiterFormulaire(@ModelAttribute ArticlesVendu article, Model model) {
+	public String traiterFormulaire(@ModelAttribute("article") ArticlesVendu article, Model model) {
 		System.out.println("Article reçu : " + article);
+		
 		 // Récupération des articles filtrés
-        ArticlesVendu articlesFiltres = articleService.consulterArticleParNo(article.getNoArticle());
-        model.addAttribute("articles", articlesFiltres);
-
+        
+        model.addAttribute("article", article);
+        
+        model.addAttribute("articles", articleService.rechercherEncheres(null, 0));
+        
         // Liste des catégories
         List<Categorie> categories = articleService.consulterCategorie();
         model.addAttribute("categories", categories);
         
-        model.addAttribute("articleVendus", article);
+       
 		
         return "index";
 	}
+	
+	
+	
+	
+	
+	
 	
 	//page vendre-article
 	

@@ -2,6 +2,7 @@ package fr.eni.tp.encheres.dal;
 
 import java.util.List;
 
+import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Enchere;
 
 public interface EnchereDAO {
@@ -17,4 +18,6 @@ public interface EnchereDAO {
 	int laMeilleureOffre(long noArticle);
 	
 	void ajouterEnchere(long noUtilisateur, long noArticle, int montantEnchere);
+	
+	
 }

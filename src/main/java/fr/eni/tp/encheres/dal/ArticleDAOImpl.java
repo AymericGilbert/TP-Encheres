@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -39,7 +40,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 	
 	private static String UPDATE_PRIX = "UPDATE ARTICLES_VENDUS SET prix_vente = :montantEnchere WHERE no_article = :noArticle";
 	
-	
+	//utilisation de 1=1 pour permmettre de decomplexifié la syntaxe permettant d'utiliser AND dans la suite de la methode
+	private static String FIND_BY_NAME = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie, c.libelle"
+												+ " FROM ARTICLES_VENDUS a"
+												+ " inner JOIN Categories c ON a.no_categorie = c.no_categorie"
+												+ " WHERE 1 = 1";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -71,7 +76,12 @@ public class ArticleDAOImpl implements ArticleDAO {
 	public ArticlesVendu read(long noArticle) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("no_article", noArticle);
-		return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new ArticleRowMapper());
+		try {
+			return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new ArticleRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -142,6 +152,21 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	        jdbcTemplate.update(UPDATE_PRIX, map);
 		
+	}
+	@Override
+	public List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		if (nomArticle != null && !nomArticle.isEmpty()) {
+			FIND_BY_NAME += " AND a.nom_article LIKE :nomArticle";
+			// ici "%" sert de caractere générique pour effectuer une recherche dans une colonne texte
+			map.addValue("nomArticle", "%" + nomArticle + "%");
+		}
+		if (no_categorie != null && !no_categorie.equals(0L) && !no_categorie.equals("Toutes")) {
+			FIND_BY_NAME += " AND c.no_categorie = :no_categorie";
+			map.addValue("no_categorie", no_categorie);
+		}
+		
+		return jdbcTemplate.query(FIND_BY_NAME, map, new ArticleRowMapper());
 	}
 
 	

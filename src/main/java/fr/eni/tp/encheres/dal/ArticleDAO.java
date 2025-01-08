@@ -12,7 +12,7 @@ public interface ArticleDAO {
 	
 	List<ArticlesVendu> findAll();
 	
-	
+	List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie);
 	
 	void update(ArticlesVendu articlesVendu);
 	

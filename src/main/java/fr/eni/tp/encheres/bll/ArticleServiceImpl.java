@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.bo.Enchere;
 import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.dal.ArticleDAO;
 import fr.eni.tp.encheres.dal.CategorieDAO;
@@ -94,6 +95,12 @@ public class ArticleServiceImpl implements ArticleService {
 		//pour mettre a jour les credit de l'utilisateur
 		utilisateurService.deduireCredit(utilisateur.getNoUtilisateur(), montantEnchere);
 		System.out.println("enchere réussie" + montantEnchere + " - à  " + utilisateur.getEmail());
+	}
+
+
+	@Override
+	public List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie) {
+		return articleDAO.rechercheArticle(nomArticle, no_categorie);
 	}
 	
 	
