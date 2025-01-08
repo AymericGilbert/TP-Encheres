@@ -40,11 +40,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 }
 
 	@Override
-	public Utilisateur read(String emailUtilisateur) {
+	public Utilisateur readByEmailUtilisateur(String emailUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("email", emailUtilisateur);
-		
-		// TO DO : remplacer le beanRowMapper par UtilisateurRowMapper
 		return this.jdbcTemplate.queryForObject(FIND_BY_EMAIL, map, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 

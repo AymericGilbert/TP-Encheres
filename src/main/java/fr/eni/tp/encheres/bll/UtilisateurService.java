@@ -9,6 +9,8 @@ public interface UtilisateurService {
 	
 	Utilisateur findByEmail(String emailUtilisateur);
 	
+	Utilisateur findByNo(long NoUtilisateur);
+	
 	void update(Utilisateur utilisateur) throws BusinessException;
 	
 	void delete(Utilisateur utilisateur) throws BusinessException;

@@ -4,7 +4,7 @@ import fr.eni.tp.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
 
-	Utilisateur read(String emailUtilisateur);
+	Utilisateur readByEmailUtilisateur(String emailUtilisateur);
 	
 	void createUtilisateur(Utilisateur utilisateur);
 	

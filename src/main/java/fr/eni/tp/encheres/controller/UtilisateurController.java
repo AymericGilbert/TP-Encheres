@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -42,14 +44,19 @@ public class UtilisateurController {
         return "redirect:/";
     }
     
-    @GetMapping("/mon-profil")
-    public String afficherMonProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateur, Model model) {
-    	if (utilisateur == null) {
+    @GetMapping("/profil")
+    public String afficherMonProfil(@RequestParam(name = "noUtilisateur", required = false) Long noUtilisateurVendeur, 
+    								@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
+    	if (utilisateurSession == null) {
             // L'utilisateur n'est pas connecté, on redirige vers la page login
-            return "redirect:/";
+            return "redirect:/login";
         }
-        model.addAttribute("utilisateur", utilisateur);
-        return "mon-profil"; 
+        if (noUtilisateurVendeur != null) {
+        	Utilisateur utilisateurVendeur = utilisateurService.findByNo(noUtilisateurVendeur);
+        	model.addAttribute("utilisateurVendeur", utilisateurVendeur);
+		}
+        
+		return "profil"; 
     }
     
     @GetMapping("/session")
@@ -83,8 +90,8 @@ public class UtilisateurController {
     }
     
     @GetMapping("/mon-profil-detail")
-    public String viewDetailProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateur, Model model) {
-    	model.addAttribute("utilisateur", utilisateur);
+    public String viewDetailProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
+    	model.addAttribute("utilisateurSession", utilisateurSession);
         return "mon-profil-detail"; 
     }
     

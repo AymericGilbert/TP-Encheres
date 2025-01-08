@@ -17,7 +17,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public Utilisateur findByEmail(String emailUtilisateur) {
-		return utilisateurDAO.read(emailUtilisateur);
+		return utilisateurDAO.readByEmailUtilisateur(emailUtilisateur);
+	}
+	
+	@Override
+	public Utilisateur findByNo(long NoUtilisateur) {
+		return utilisateurDAO.readByNoUtilisateur(NoUtilisateur);
 	}
 
 	@Override
@@ -66,5 +71,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		int creditsActuels = utilisateurDAO.totalCreditUtilisateur(noUtilisateurs);
 		utilisateurDAO.updateCredit(noUtilisateurs, creditsActuels + montantEnchere);
 		}
+
 	
 }
