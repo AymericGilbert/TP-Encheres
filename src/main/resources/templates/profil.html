@@ -61,8 +61,8 @@
             				 utilisateurVendeur.ville : utilisateurSession.ville}"></td>
         	</tr>
     	</table>
-    	<!-- <button th:if="${utilisateurVendeur = null ?" 
-    	type="button" onclick="window.location.href='/mon-profil-detail'">Modifier mon compte</button> -->
+    	<button th:if="${utilisateurVendeur == null}" 
+    	type="button" onclick="window.location.href='/mon-profil-detail'">Modifier mon compte</button>
     	
 	</section>
 </body>
