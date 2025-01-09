@@ -106,40 +106,33 @@ public class EnchereController {
         return "index";
 	}
 	
-	
-	
-	
-	
-	
-	
 	//page vendre-article
 	
 	 @GetMapping("/vendre-article")
-	    public String afficherFormulaireVente(Model model) {
+	    public String afficherFormulaireVente(Model model, @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession) {
 		 	ArticlesVendu article = new ArticlesVendu();
 		    article.setLieuRetrait(new Retrait());
-		    List<Categorie> categories = articleService.consulterCategorie() ;
+		    List<Categorie> categories = articleService.consulterCategorie();
 		    
 	        model.addAttribute("articleVendus", article);
 	        model.addAttribute("categories", categories);
+	        model.addAttribute("utilisateurSession", utilisateurSession);
 	        return "vendre-article";
 	    }
 
 	    @PostMapping("/vendre-article")
-	    public String enregistrerArticle(@ModelAttribute ArticlesVendu article, Model model) {
+	    public String enregistrerArticle(@ModelAttribute ArticlesVendu article, 
+	    								 @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,  Model model) {
 	       System.out.println("Article enregistré : " + article);
-	       System.out.println("Retrait : " + article.getLieuRetrait());
-	       	Utilisateur u = new Utilisateur();
-	       	u.setNoUtilisateur(1);
-	       	
-	       	article.setVendeur(u);
+	       System.out.println("Retrait : " + article.getLieuRetrait());	       	       	
+	       article.setVendeur(utilisateurSession);
 	       //il faut que je set le vendeur article avec utilisateur connecter
 	       try {
 			articleService.creerArticle(article);
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+	       } catch (BusinessException e) {
+	    	   e.printStackTrace();
+	       }
 	       
 	        return "redirect:/";
 	    }    

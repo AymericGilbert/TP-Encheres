@@ -26,7 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
 	public ArticleServiceImpl(ArticleDAO articleDAO, CategorieDAO categorieDAO, EnchereDAO enchereDAO,
-			UtilisateurService utilisateurService) {
+							  UtilisateurService utilisateurService) {
 		this.articleDAO = articleDAO;
 		this.categorieDAO = categorieDAO;
 		this.enchereDAO = enchereDAO;
@@ -112,9 +112,6 @@ public class ArticleServiceImpl implements ArticleService {
 		 System.out.println("Recherche avec nomArticle: " + nomArticle + ", no_categorie: " + no_categorie);
 		return articleDAO.rechercheArticle(nomArticle, no_categorie, encheresOuvertes, encheresEnCours, encheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, utilisateurSession);
 	}
-	
-	
-	
 	
 	/*private boolean validerArticleUnique(boolean etatVente, BusinessException be) {
 		boolean etatVenteArticle = this.articleDAO.etatVenteArticle(etatVente);

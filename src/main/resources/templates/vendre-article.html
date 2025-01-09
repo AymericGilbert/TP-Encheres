@@ -47,13 +47,13 @@ une fois enregistrer si l'utilisateur
         <fieldset>
             <legend>Retrait</legend>
             <label for="rue">Rue :</label>
-            <input type="text" id="rue" th:field="*{lieuRetrait.rue}" required/><br/>
+            <input type="text" id="rue" th:field="*{lieuRetrait.rue}" th:value="${utilisateurSession.rue}" required/><br/>
 
             <label for="codePostal">Code postal :</label>
-            <input type="text" id="codePostal" th:field="*{lieuRetrait.codePostal}" required/><br/>
+            <input type="text" id="codePostal" th:field="*{lieuRetrait.codePostal}" th:value="${utilisateurSession.codePostal}" required/><br/>
 
             <label for="ville">Ville :</label>
-            <input type="text" id="ville" th:field="*{lieuRetrait.ville}" required/><br/>
+            <input type="text" id="ville" th:field="*{lieuRetrait.ville}" th:value="${utilisateurSession.ville}" required/><br/>
         </fieldset>
 
         <button type="submit">Enregistrer</button>

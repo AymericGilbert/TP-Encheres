@@ -65,23 +65,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	@Transactional
 	public void add(Utilisateur nouvelUtilisateur) throws BusinessException {
-		//BusinessException be = new BusinessException();
-		//boolean valide = validerEmailUnique(nouvelUtilisateur.getEmail(), be);
-		//valide &= validerPseudoUnique(nouvelUtilisateur.getPseudo(), be);
-		//autres regles de validation ...
-		//la fonction creation ne fonctinneras que si cela valide la fonction validerEmailUnique
-		//if (valide) {
-			
-			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-			String passwordCrypt = passwordEncoder.encode(nouvelUtilisateur.getMotDePasse());
-			nouvelUtilisateur.setMotDePasse(passwordCrypt);
-			utilisateurDAO.createUtilisateur(nouvelUtilisateur);
-			System.out.println(passwordCrypt);
-			System.out.println("Nouvel Utilisateur créé :" + nouvelUtilisateur.getPseudo());
-			
-		//} else {
-		//	throw be;
-		//}
+		BusinessException be = new BusinessException();
+		// Encodage du mot de passe
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String passwordCrypt = passwordEncoder.encode(nouvelUtilisateur.getMotDePasse());
+		nouvelUtilisateur.setMotDePasse(passwordCrypt);
+		
+		//Creation de l'utilisateur dans la base de données
+		utilisateurDAO.createUtilisateur(nouvelUtilisateur);
+		
+		System.out.println("Nouvel Utilisateur créé :" + nouvelUtilisateur.getPseudo());
 	}
 
 	@Override

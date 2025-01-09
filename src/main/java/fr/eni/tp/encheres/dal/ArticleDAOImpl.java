@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
+import fr.eni.tp.encheres.bo.Retrait;
 import fr.eni.tp.encheres.bo.Utilisateur;
 import fr.eni.tp.encheres.security.SecuriteConfig;
 @Repository
@@ -21,17 +22,20 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	private static String INSERT  = "INSERT INTO [ARTICLES_VENDUS] (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES"
 			                            + " ( :nom_article, :description, :date_debut_encheres,:date_fin_encheres , :prix_initial, :prix_vente, :no_utilisateur, :no_categorie)";
+
 	
 	private static String FIND_BY_NO  = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
-			      							+ " u.no_utilisateur, c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
-			      							+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
+			      							+ " u.no_utilisateur, u.pseudo, u.nom, u.prenom, u.email, u.telephone, u.rue, u.code_postal, u.ville, "
+			      							+ "c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
+			      							+ "inner join UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
 			      							+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie WHERE a.no_article = :no_article ";
 			
 	
 	private static String FIND_ALL = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente,"
-									 	+ " u.no_utilisateur, c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
-									 	+ "inner join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
-									 	+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie ";
+										 + " u.no_utilisateur,  u.pseudo, u.nom, u.prenom, u.email, u.telephone, u.rue, u.code_postal, u.ville, "
+										 + "c.no_categorie,c.libelle FROM ARTICLES_VENDUS a "
+										 + "inner join UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
+										 + "inner join CATEGORIES c on a.no_categorie = c.no_categorie ";
 	
 	private static String FIND_BY_ARTICLE  = "SELECT nom_article FROM ARTICLES_VENDUS WHERE no_article = :no_article";
 	
@@ -42,11 +46,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static String UPDATE_PRIX = "UPDATE ARTICLES_VENDUS SET prix_vente = :montantEnchere WHERE no_article = :noArticle";
 	
 	//utilisation de 1=1 pour permmettre de decomplexifié la syntaxe permettant d'utiliser AND dans la suite de la methode
-	private static final String FIND_BY_NAME = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie, c.libelle"
-												+ " FROM ARTICLES_VENDUS a"
-												+ " inner JOIN Categories c ON a.no_categorie = c.no_categorie"
-												+ " LEFT JOIN ENCHERES e on e.no_article = a.no_article"
-												+ " WHERE 1 = 1";
+	private static final String FIND_BY_NAME = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
+												+ "a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie, u.no_utilisateur,  u.pseudo, u.nom, u.prenom, u.email, "
+												+ "u.telephone, u.rue, u.code_postal, u.ville, c.libelle "
+												+ "FROM ARTICLES_VENDUS a "
+												+ "inner JOIN Categories c ON a.no_categorie = c.no_categorie "
+												+ "inner join UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
+												+ "LEFT JOIN ENCHERES e on e.no_article = a.no_article "
+												+ "WHERE 1 = 1";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -122,14 +129,25 @@ public class ArticleDAOImpl implements ArticleDAO {
 			
 			Utilisateur utilisateur = new Utilisateur();
 			utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
+			utilisateur.setPseudo(rs.getString("pseudo"));
+			utilisateur.setNom(rs.getString("nom"));
+			utilisateur.setPrenom(rs.getString("prenom"));
+			utilisateur.setEmail(rs.getString("email"));
+			utilisateur.setTelephone(rs.getString("telephone"));
+			utilisateur.setRue(rs.getString("rue"));
+			utilisateur.setCodePostal(rs.getInt("code_postal"));
 			a.setVendeur(utilisateur);
+			
+			Retrait retrait = new Retrait();
+			retrait.setRue(rs.getString("rue"));
+			retrait.setCodePostal(rs.getInt("code_postal"));
+			retrait.setVille(rs.getString("ville"));
 			
 			Categorie categorie = new Categorie();
 			categorie.setNoCategorie(rs.getLong("no_categorie"));
 			categorie.setLibelle(rs.getString("libelle"));
 			a.setCategorieArticle(categorie);
-			
-			
+
 			return a;
 		}
 		

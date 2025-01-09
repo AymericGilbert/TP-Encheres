@@ -71,9 +71,10 @@
 	<div th:if="${not #lists.isEmpty(articles)}">
     	<div th:each="article : ${articles}" style="border: 1px solid black; width: 300px; padding: 10px; box-shadow: 2px 2px 5px grey;">
         	<h3 th:text="${article.nomArticle}">Nom de l'article</h3>
-        	<p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
+        	<p>Prix : <span th:text="${article.prixVente} + 'points'"></span></p>
         	<p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
-        	<p>Vendeur : <span th:text="${article.vendeur.pseudo}"></span></p>
+        	<p>Vendeur : <a th:href="@{/profil(noUtilisateur=${article.vendeur.noUtilisateur})}"><span th:text="${article.vendeur.pseudo}"></span></a></p>
+        	<!-- <p>Lieu de vente : <span th:text="${article.lieuRetrait != null ? article.lieuRetrait.ville : article.vendeur.ville}"></span></p> -->
         	<a th:href="@{/view-acquereur(noArticle=${article.noArticle})}">Voir l'enchère</a>
     </div>
 </div>

@@ -55,7 +55,7 @@ public class UtilisateurController {
     }
     
     @GetMapping("/profil")
-    public String afficherMonProfil(@RequestParam(name = "noUtilisateur", required = false) Long noUtilisateurVendeur, 
+    public String afficherProfil(@RequestParam(name = "noUtilisateur", required = false) Long noUtilisateurVendeur, 
     								@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
     	if (utilisateurSession == null) {
             // L'utilisateur n'est pas connecté, on redirige vers la page login
