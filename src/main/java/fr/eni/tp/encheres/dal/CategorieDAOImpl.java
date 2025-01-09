@@ -11,7 +11,7 @@ import fr.eni.tp.encheres.bo.Categorie;
 @Repository
 public class CategorieDAOImpl implements CategorieDAO {
 
-	private static String FIND_BY_NO = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = :no_categorie";
+	private static final String FIND_BY_NO = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = :no_categorie";
 	
 	private static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES ";
 	
@@ -23,9 +23,10 @@ public class CategorieDAOImpl implements CategorieDAO {
 
 	@Override
 	public Categorie read(long noCategorie) {
+		String demande = FIND_BY_NO;
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("no_categorie", noCategorie);
-		return this.jdbcTemplate.queryForObject(FIND_BY_NO, map, new BeanPropertyRowMapper<>(Categorie.class));
+		return this.jdbcTemplate.queryForObject(demande, map, new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
 	@Override

@@ -96,6 +96,7 @@ public class SecuriteConfig {
      * Récupère l'ID de l'utilisateur actuellement connecté.
      * @return L'ID de l'utilisateur connecté ou null si non connecté.
      */
+	
     public static Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -110,6 +111,7 @@ public class SecuriteConfig {
      * Récupère l'objet utilisateur actuellement connecté.
      * @return L'objet Utilisateur connecté ou null si non connecté.
      */
+	 
     public static Utilisateur getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

@@ -43,6 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public ArticlesVendu consulterArticleParNo(long noArticle) {
 		ArticlesVendu a = this.articleDAO.read(noArticle);
+		System.out.println("la categorie est " + a);
 		return a;
 	}
 
@@ -95,15 +96,21 @@ public class ArticleServiceImpl implements ArticleService {
 		//pour mettre a jour les credit de l'utilisateur
 		utilisateurService.deduireCredit(utilisateur.getNoUtilisateur(), montantEnchere);
 		System.out.println("enchere réussie" + montantEnchere + " - à  " + utilisateur.getEmail());
+		
+		//methode pour rembourser les points
+		long ancienUtilisateur = enchereDAO.exBestEncherisseur(noArticle);
+		if (ancienUtilisateur != 0) {
+			utilisateurService.rembourserPoints(ancienUtilisateur, montantEnchere);
+		}
+		
 	}
 
 
 	@Override
 	public List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie,  Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
-	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees) {
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees, Utilisateur utilisateurSession) {
 		 System.out.println("Recherche avec nomArticle: " + nomArticle + ", no_categorie: " + no_categorie);
-		return articleDAO.rechercheArticle(nomArticle, no_categorie, encheresOuvertes, 
-		        encheresEnCours, encheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees);
+		return articleDAO.rechercheArticle(nomArticle, no_categorie, encheresOuvertes, encheresEnCours, encheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, utilisateurSession);
 	}
 	
 	

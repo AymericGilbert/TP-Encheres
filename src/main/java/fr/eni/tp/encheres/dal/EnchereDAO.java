@@ -19,5 +19,7 @@ public interface EnchereDAO {
 	
 	void ajouterEnchere(long noUtilisateur, long noArticle, int montantEnchere);
 	
+	long exBestEncherisseur(long noArticle);
+	
 	
 }

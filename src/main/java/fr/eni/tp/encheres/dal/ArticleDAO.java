@@ -3,6 +3,7 @@ package fr.eni.tp.encheres.dal;
 import java.util.List;
 
 import fr.eni.tp.encheres.bo.ArticlesVendu;
+import fr.eni.tp.encheres.bo.Utilisateur;
 
 public interface ArticleDAO {
 
@@ -14,7 +15,7 @@ public interface ArticleDAO {
 	
 	List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie,
 			Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
-	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees);
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees, Utilisateur utilisateur);
 	
 	void update(ArticlesVendu articlesVendu);
 	

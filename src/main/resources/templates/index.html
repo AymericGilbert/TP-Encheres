@@ -23,6 +23,7 @@
             <label for="search">Le nom de l'article contient :</label>
             <input type="text" th:field="*{nomArticle}" id="search" >
             
+            <!--peut doit-je ajouter un search ou midifier cette partie pour correspondre a la methode rechercher></!-->
             <label for="categorie">Catégorie :</label>
             <select th:field="*{categorieArticle}">
    				<option th:each="c : ${categorieSession}" th:value="${c.noCategorie}" th:text="${c.libelle}"></option>

@@ -42,9 +42,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static String UPDATE_PRIX = "UPDATE ARTICLES_VENDUS SET prix_vente = :montantEnchere WHERE no_article = :noArticle";
 	
 	//utilisation de 1=1 pour permmettre de decomplexifié la syntaxe permettant d'utiliser AND dans la suite de la methode
-	private static String FIND_BY_NAME = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie, c.libelle"
+	private static final String FIND_BY_NAME = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie, c.libelle"
 												+ " FROM ARTICLES_VENDUS a"
 												+ " inner JOIN Categories c ON a.no_categorie = c.no_categorie"
+												+ " LEFT JOIN ENCHERES e on e.no_article = a.no_article"
 												+ " WHERE 1 = 1";
 
 	
@@ -156,43 +157,53 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 	@Override
 	public List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie, Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
-	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees) {
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees, Utilisateur utilisateur) {
+		String requete = FIND_BY_NAME;
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		if (nomArticle != null && !nomArticle.trim().isEmpty()) {
-			FIND_BY_NAME += " AND a.nom_article LIKE :nomArticle";
+			requete += " AND a.nom_article LIKE :nomArticle";
 			// ici "%" sert de caractere générique pour effectuer une recherche dans une colonne texte
 			map.addValue("nomArticle", "%" + nomArticle + "%");
 		}
-		if (no_categorie != null && !no_categorie.equals(0L) && !no_categorie.equals("Toutes")) {
-			FIND_BY_NAME += " AND c.no_categorie = :no_categorie";
+		// sql marche
+		if (no_categorie != null && !no_categorie.equals(0L) && !no_categorie.equals("Toutes")) {  //!no_categorie.equals(0L) && !no_categorie.equals("Toutes")
+			requete += " AND c.no_categorie = :no_categorie";
 			map.addValue("no_categorie", no_categorie);
 		}
 		 if (Boolean.TRUE.equals(encheresOuvertes)) {
-			 FIND_BY_NAME += " AND a.date_fin_encheres > NOW()";
-		    }
-		    if (Boolean.TRUE.equals(encheresEnCours)) {
-		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres > NOW()";
-		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
-		    }
-		    if (Boolean.TRUE.equals(encheresRemportees)) {
-		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres <= NOW()";
-		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
-		    }
-		    if (Boolean.TRUE.equals(ventesEnCours)) {
-		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres > NOW()";
-		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
-		    }
-		    if (Boolean.TRUE.equals(ventesNonDebutees)) {
-		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_debut_encheres > NOW()";
-		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
-		    }
-		    if (Boolean.TRUE.equals(ventesTerminees)) {
-		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres <= NOW()";
-		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
-		    }
-		return jdbcTemplate.query(FIND_BY_NAME, map, new ArticleRowMapper());
+			 requete += " AND a.date_fin_encheres > GETDATE()";
+			 map.addValue("currentUser", utilisateur.getNoUtilisateur());
+		 }
+			// sql marche
+		 if (Boolean.TRUE.equals(encheresEnCours)) {
+			        requete += " AND e.no_utilisateur = :currentUser AND a.date_debut_encheres <= GETDATE() AND a.date_fin_encheres > GETDATE()";
+			        map.addValue("currentUser", utilisateur.getNoUtilisateur());
+			    }
+			    if (Boolean.TRUE.equals(encheresRemportees)) {
+			        requete += " AND e.no_utilisateur = :currentUser AND a.date_fin_encheres <= GETDATE()";
+			        map.addValue("currentUser", utilisateur.getNoUtilisateur());
+			    }
+			 // sql marche
+			    if (Boolean.TRUE.equals(ventesEnCours)) {
+			        requete += " AND a.no_utilisateur = :currentUser AND a.date_debut_encheres <= GETDATE() AND a.date_fin_encheres > GETDATE()";
+			        map.addValue("currentUser", utilisateur.getNoUtilisateur());
+			    }
+			    if (Boolean.TRUE.equals(ventesNonDebutees)) {
+			        requete += " AND a.no_utilisateur = :currentUser AND a.date_debut_encheres > GETDATE()";
+			        map.addValue("currentUser", utilisateur.getNoUtilisateur());
+			    }
+			    if (Boolean.TRUE.equals(ventesTerminees)) {
+			        requete += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres <= GETDATE()";
+			        map.addValue("currentUser", utilisateur.getNoUtilisateur());
+			    }
+			    System.out.println("Requête SQL : " + requete);
+			    System.out.println("Paramètres : " + map.getValues());
+			    
+		return jdbcTemplate.query(requete, map, new ArticleRowMapper());
 	}
 
-	
+		//es que date_enchere et date_fin_enchere doivent correspondre (logiquement 
+		//non car date enchere refererences la date ou un utilisateur a encherie
 
 }
+

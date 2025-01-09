@@ -40,7 +40,10 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private static String INSERT_GETDATE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) "
             								+ "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
 	
-	
+	private static final String SELECT_AV_DERNIER = "SELECT no_utilisateur"
+												+ "FROM (SELECT no_utilisateur ROW_NUMBER() OVER (ORDER BY montant_enchere DESC) AS row_num"
+												+ "FROM encheres WHERE no_article = :no_article) AS subquery "
+												+ "WHERE row_num = 2";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -120,6 +123,14 @@ public class EnchereDAOImpl implements EnchereDAO {
 			map.addValue("montantEnchere", montantEnchere);
 			jdbcTemplate.update(INSERT_GETDATE, map);
 		}
+	}
+
+	@Override
+	public long exBestEncherisseur(long noArticle) {
+		 MapSqlParameterSource map = new MapSqlParameterSource();
+		 map.addValue("noArticle", noArticle);
+
+		 return jdbcTemplate.queryForObject(SELECT_AV_DERNIER, map, Long.class);
 	}
 
 	
