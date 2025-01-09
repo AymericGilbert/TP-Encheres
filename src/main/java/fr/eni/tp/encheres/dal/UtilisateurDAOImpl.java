@@ -1,5 +1,7 @@
 package fr.eni.tp.encheres.dal;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,7 +25,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	
 	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE email = :email";
 	
-	private static final String FIND_ALL = "SELECT email, nom, prenom FROM UTILISATEURS";
+	private static final String FIND_PSEUDO = "SELECT pseudo FROM UTILISATEURS WHERE pseudo = :pseudo";
+	
+	private static final String FIND_EMAIL = "SELECT email FROM UTILISATEURS WHERE email = :email";
 	
 	private static final String FIND_BY_NO = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur";
 	
@@ -44,6 +48,46 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("email", emailUtilisateur);
 		return this.jdbcTemplate.queryForObject(FIND_BY_EMAIL, map, new BeanPropertyRowMapper<>(Utilisateur.class));
+	}
+	
+	@Override
+	public boolean existByPseudo(String pseudoUtilisateur, long noUtilisateur) {
+		String requete = FIND_PSEUDO;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("pseudo", pseudoUtilisateur);
+		
+		if (noUtilisateur != 0) {
+			map.addValue("noUtilisateur", noUtilisateur);
+			requete += " AND no_utilisateur <> :noUtilisateur";
+		}
+		
+		List<String> pseudos = jdbcTemplate.queryForList(requete, map, String.class);
+		
+		if (pseudos.isEmpty()) {
+			return false;
+		} 
+		
+		return true;
+	}
+	
+	@Override
+	public boolean existByEmail(String emailUtilisateur, long noUtilisateur) {
+		String requete = FIND_EMAIL;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("email", emailUtilisateur);
+		
+		if (noUtilisateur != 0) {
+			map.addValue("noUtilisateur", noUtilisateur);
+			requete += " AND no_utilisateur <> :noUtilisateur";
+		}
+		
+		List<String> emails = jdbcTemplate.queryForList(requete, map, String.class);
+		
+		if (emails.isEmpty()) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -69,12 +113,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			utilisateur.setNoUtilisateur(keyHolder.getKey().longValue());
 		}
 		
-	}
-
-	//@Override
-	public boolean compteDejaExistant(String nom) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -105,12 +143,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		this.jdbcTemplate.update(DELETE, map);
 		System.out.println("L'utilisateur à été supprimé");
 	}
-
-	@Override
-	public Utilisateur findUtilisateur() {
-		return (Utilisateur) this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
-	}
-
 
 	@Override
 	public void updateCredit(long noUtilisateur, int credit) {
