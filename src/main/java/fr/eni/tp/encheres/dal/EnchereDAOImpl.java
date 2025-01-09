@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -40,10 +41,15 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private static String INSERT_GETDATE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) "
             								+ "VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
 	
-	private static final String SELECT_AV_DERNIER = "SELECT no_utilisateur"
-												+ "FROM (SELECT no_utilisateur ROW_NUMBER() OVER (ORDER BY montant_enchere DESC) AS row_num"
-												+ "FROM encheres WHERE no_article = :no_article) AS subquery "
-												+ "WHERE row_num = 2";
+	private static final String SELECT_AV_DERNIER = "SELECT TOP 1 no_utilisateur FROM ENCHERES WHERE no_article = :no_article"
+													+ " AND montant_enchere < (SELECT MAX(montant_enchere) "
+													+ " FROM ENCHERES WHERE no_article = :no_article)"
+													+ " ORDER BY montant_enchere DESC";
+	
+	private static final String LE_DERNIER_MONTANT = "SELECT montant_enchere FROM ENCHERES " 
+													+ "WHERE no_utilisateur = :noUtilisateur AND no_article = :noArticle";
+		    
+	
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -128,10 +134,23 @@ public class EnchereDAOImpl implements EnchereDAO {
 	@Override
 	public long exBestEncherisseur(long noArticle) {
 		 MapSqlParameterSource map = new MapSqlParameterSource();
-		 map.addValue("noArticle", noArticle);
-
-		 return jdbcTemplate.queryForObject(SELECT_AV_DERNIER, map, Long.class);
+		 map.addValue("no_article", noArticle);
+		 try {
+		        return jdbcTemplate.queryForObject(SELECT_AV_DERNIER, map, Long.class);
+		    } catch (EmptyResultDataAccessException e) {
+		        return 0; 
+		    }
 	}
 
+	@Override
+	public int DernierMontant(long noArticle, long noUtilisateur) {
+		 MapSqlParameterSource map = new MapSqlParameterSource();
+		    map.addValue("noUtilisateur", noUtilisateur);
+		    map.addValue("noArticle", noArticle);
+		    return jdbcTemplate.queryForObject(LE_DERNIER_MONTANT, map, Integer.class);
+	}
+	
+	
+	
 	
 }

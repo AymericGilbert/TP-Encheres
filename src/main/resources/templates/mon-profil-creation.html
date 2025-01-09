@@ -2,6 +2,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/general.css}" />
+	<link rel="icon" th:href="@{/images/logoENI.png}" />
+	<link rel="stylesheet" th:href="@{/css/tp-form.css}" />
 	<!--affiche la creation du profil et 
 	afficheras la page pour modifier le profil une fois connecter
 	remplace les bouton creer/annuler 
@@ -10,10 +13,11 @@
 	<title>ENI Enchères - mon profil</title>
 </head>
 <header>
-	<h2>ENI-Enchères</h2>
+	
 </header>
 <body>
-	<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
+
+	<div th:replace="~{fragments/fragment-lien-titre :: frag-titre}"></div>
 	<section>
 		<h1>Mon profil Création</h1>
 	</section>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/general.css}" />
 <link rel="icon" th:href="@{/images/logoENI.png}" />
-<link rel="stylesheet" th:href="@{/css/majform.css}" />
+<link rel="stylesheet" th:href="@{/css/tp-table.css}" />
 <!--affiche les detail de la vente et permettant d'y particper
 seras modifier si la vente est terminer devras afficher le resultat de la vente 
 + l'utilsateur qui aremporter l'enchere et si oui ou non c'est nous 
@@ -13,7 +13,7 @@ affichage different en fonction de l'utilisteur ou membre vainqueur></!-->
 <title>ENI-Enchères</title>
 </head>
 <body>
-	 <h1>ENI-Enchères</h1>
+	<div th:replace="~{fragments/fragment-lien-titre :: frag-titre}"></div>
      <h2>Détail vente</h2>
 
 	<section>
@@ -23,7 +23,7 @@ affichage different en fonction de l'utilisteur ou membre vainqueur></!-->
         <p><strong>Meilleure offre :</strong> <span th:text="${article.prixVente}"></span> points</p>
         <p><strong>Mise à prix :</strong> <span th:text="${article.miseAPrix}"></span> points</p>
         <p><strong>Fin de l'enchère :</strong> <span th:text="${article.dateFinEncheres}"></span></p>
-        <!--<p><strong>Retrait :</strong> <span th:text="${article.lieuRetrait.adresse}"></span></p>></!-->
+        <p><strong>Retrait :</strong> <span th:text="${article.vendeur.ville}"></span></p>
         <p><strong>Vendeur :</strong> <span th:text="${article.vendeur.pseudo}"></span></p>
 		
 		

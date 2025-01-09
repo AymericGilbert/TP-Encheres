@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/general.css}" />
 <link rel="icon" th:href="@{/images/logoENI.png}" />
-<link rel="stylesheet" th:href="@{/css/majform.css}" />
+<link rel="stylesheet" th:href="@{/css/tp-form.css}" />
 </head>
 <!--affichage de la vue pour permettre de creer un produit 
 n'est accessible que par un utilisateur
@@ -16,8 +16,8 @@ une fois enregistrer si l'utilisateur
 
 </head>
 <body>
-<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
- <h1>Nouvelle Vente</h1>
+<div th:replace="~{fragments/fragment-lien-titre :: frag-titre}"></div>
+ <h2>Nouvelle Vente</h2>
     <form th:action="@{/vendre-article}" th:object="${articleVendus}" method="post">
        
         <label for="nom">Article :</label>

@@ -2,12 +2,15 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/general.css}" />
+	<link rel="icon" th:href="@{/images/logoENI.png}" />
+	<link rel="stylesheet" th:href="@{/css/tp-form.css}" />
 	<!--seras afficher quand l'utilisateur cliquera sur mon profil 
 	et renverras vers la page monprofil.html si on clique sur modifier></!-->
 	<title>Modification du profil</title>
 </head>
 <body>
-	<div th:replace="~{fragments/fragment-entete :: frag-entete}"></div>
+	<div th:replace="~{fragments/fragment-lien-titre :: frag-titre}"></div>
 	<section>
 		<form th:action="@{/modificationProfil}" th:object="${utilisateurSession}" method="post">
 			<label for="pseudo">Pseudo :</label>

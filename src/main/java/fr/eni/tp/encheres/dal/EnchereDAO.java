@@ -21,5 +21,6 @@ public interface EnchereDAO {
 	
 	long exBestEncherisseur(long noArticle);
 	
+	int DernierMontant(long noArticle, long noUtilisateur);
 	
 }

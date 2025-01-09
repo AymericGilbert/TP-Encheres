@@ -100,7 +100,14 @@ public class ArticleServiceImpl implements ArticleService {
 		//methode pour rembourser les points
 		long ancienUtilisateur = enchereDAO.exBestEncherisseur(noArticle);
 		if (ancienUtilisateur != 0) {
-			utilisateurService.rembourserPoints(ancienUtilisateur, montantEnchere);
+			System.out.println("Ancien utilisateur (avant-dernier enchérisseur) : " + ancienUtilisateur);
+			
+			int dernierMontant = enchereDAO.DernierMontant(noArticle, ancienUtilisateur);
+			System.out.println("Montant de l'ancien enchérisseur : " + dernierMontant);
+			
+			utilisateurService.rembourserPoints(ancienUtilisateur, dernierMontant);
+			System.out.println("Crédit remboursé à l'utilisateur " + ancienUtilisateur + " : " + dernierMontant);
+
 		}
 		
 	}

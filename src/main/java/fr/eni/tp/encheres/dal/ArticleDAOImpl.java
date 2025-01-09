@@ -220,8 +220,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return jdbcTemplate.query(requete, map, new ArticleRowMapper());
 	}
 
-		//es que date_enchere et date_fin_enchere doivent correspondre (logiquement 
-		//non car date enchere refererences la date ou un utilisateur a encherie
 
 }
 

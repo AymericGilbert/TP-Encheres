@@ -149,6 +149,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("credit", credit);
         map.addValue("noUtilisateur", noUtilisateur);
+        System.out.println("Mise à jour des crédits pour noUtilisateur : " + noUtilisateur + " avec montant : " + credit);
+
 
         this.jdbcTemplate.update(UPDATE_CREDIT_BY_NO, map);
 		
