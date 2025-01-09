@@ -21,7 +21,8 @@ public interface ArticleService {
 	
 	void encherir(long noArticle , String email, int montantEnchere) throws Exception;
 	
-	List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie);
+	List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie, Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees);
 	
 
 	//boolean validerArticleUnique(boolean etatVente);

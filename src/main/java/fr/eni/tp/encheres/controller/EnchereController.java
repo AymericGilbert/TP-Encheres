@@ -57,12 +57,21 @@ public class EnchereController {
 		@RequestMapping(value = "/rechercher", method = {RequestMethod.GET, RequestMethod.POST})
 	    public String rechercherEncheres(@RequestParam(name ="nomArticle", required = false) String nomArticle,
 	    								 @RequestParam(name ="no_categorie", required = false) Long no_categorie,
+	    								 @RequestParam(name = "encheresOuvertes", required = false) Boolean encheresOuvertes,
+	    							     @RequestParam(name = "encheresEnCours", required = false) Boolean encheresEnCours,
+	    							     @RequestParam(name = "encheresRemportees", required = false) Boolean encheresRemportees,
+	    							     @RequestParam(name = "ventesEnCours", required = false) Boolean ventesEnCours,
+	    							     @RequestParam(name = "ventesNonDebutees", required = false) Boolean ventesNonDebutees,
+	    							     @RequestParam(name = "ventesTerminees", required = false) Boolean ventesTerminees,
 	    								 Model model ) {
-	  
+			model.addAttribute("article", new ArticlesVendu());
 		    if (nomArticle == null) nomArticle = "";
 		    if (no_categorie == null) no_categorie = 0L;
 		  
-	        List<ArticlesVendu> encheres = articleService.rechercherEncheres(nomArticle, no_categorie);
+	        List<ArticlesVendu> encheres = articleService.rechercherEncheres(nomArticle, no_categorie, encheresOuvertes, encheresEnCours, encheresRemportees,
+	                ventesEnCours, ventesNonDebutees, ventesTerminees);
+	        
+	        
 	        model.addAttribute("encheres", encheres);
 	        
 	        model.addAttribute("categories", articleService.consulterCategorie());
@@ -84,7 +93,7 @@ public class EnchereController {
         
         model.addAttribute("article", article);
         
-        model.addAttribute("articles", articleService.rechercherEncheres(null, 0));
+        model.addAttribute("articles", articleService.rechercherEncheres(null, 0, null, null, null, null, null, null));
         
         // Liste des catégories
         List<Categorie> categories = articleService.consulterCategorie();

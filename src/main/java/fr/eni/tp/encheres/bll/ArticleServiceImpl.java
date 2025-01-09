@@ -99,8 +99,11 @@ public class ArticleServiceImpl implements ArticleService {
 
 
 	@Override
-	public List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie) {
-		return articleDAO.rechercheArticle(nomArticle, no_categorie);
+	public List<ArticlesVendu> rechercherEncheres(String nomArticle, long no_categorie,  Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees) {
+		 System.out.println("Recherche avec nomArticle: " + nomArticle + ", no_categorie: " + no_categorie);
+		return articleDAO.rechercheArticle(nomArticle, no_categorie, encheresOuvertes, 
+		        encheresEnCours, encheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees);
 	}
 	
 	

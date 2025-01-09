@@ -20,6 +20,12 @@ import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import fr.eni.tp.encheres.bo.Utilisateur;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+
 @Configuration
 @EnableWebSecurity
 public class SecuriteConfig {
@@ -85,5 +91,32 @@ public class SecuriteConfig {
 			
 		return jdbcUserDetailsManager;
 	}
+	
+	/**
+     * Récupère l'ID de l'utilisateur actuellement connecté.
+     * @return L'ID de l'utilisateur connecté ou null si non connecté.
+     */
+    public static Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof Utilisateur) {
+            Utilisateur utilisateur = (Utilisateur) authentication.getPrincipal();
+            return utilisateur.getNoUtilisateur();
+        }
+        return null; // Aucun utilisateur connecté
+    }
+
+    /**
+     * Récupère l'objet utilisateur actuellement connecté.
+     * @return L'objet Utilisateur connecté ou null si non connecté.
+     */
+    public static Utilisateur getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof Utilisateur) {
+            return (Utilisateur) authentication.getPrincipal();
+        }
+        return null; // Aucun utilisateur connecté
+    }
+}
 		
-}		

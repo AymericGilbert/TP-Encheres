@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import fr.eni.tp.encheres.bo.ArticlesVendu;
 import fr.eni.tp.encheres.bo.Categorie;
 import fr.eni.tp.encheres.bo.Utilisateur;
+import fr.eni.tp.encheres.security.SecuriteConfig;
 @Repository
 public class ArticleDAOImpl implements ArticleDAO {
 
@@ -154,9 +155,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 		
 	}
 	@Override
-	public List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie) {
+	public List<ArticlesVendu> rechercheArticle(String nomArticle, Long no_categorie, Boolean encheresOuvertes, Boolean encheresEnCours, Boolean encheresRemportees,
+	        Boolean ventesEnCours, Boolean ventesNonDebutees, Boolean ventesTerminees) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		if (nomArticle != null && !nomArticle.isEmpty()) {
+		if (nomArticle != null && !nomArticle.trim().isEmpty()) {
 			FIND_BY_NAME += " AND a.nom_article LIKE :nomArticle";
 			// ici "%" sert de caractere générique pour effectuer une recherche dans une colonne texte
 			map.addValue("nomArticle", "%" + nomArticle + "%");
@@ -165,7 +167,29 @@ public class ArticleDAOImpl implements ArticleDAO {
 			FIND_BY_NAME += " AND c.no_categorie = :no_categorie";
 			map.addValue("no_categorie", no_categorie);
 		}
-		
+		 if (Boolean.TRUE.equals(encheresOuvertes)) {
+			 FIND_BY_NAME += " AND a.date_fin_encheres > NOW()";
+		    }
+		    if (Boolean.TRUE.equals(encheresEnCours)) {
+		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres > NOW()";
+		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
+		    }
+		    if (Boolean.TRUE.equals(encheresRemportees)) {
+		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres <= NOW()";
+		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
+		    }
+		    if (Boolean.TRUE.equals(ventesEnCours)) {
+		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres > NOW()";
+		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
+		    }
+		    if (Boolean.TRUE.equals(ventesNonDebutees)) {
+		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_debut_encheres > NOW()";
+		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
+		    }
+		    if (Boolean.TRUE.equals(ventesTerminees)) {
+		    	FIND_BY_NAME += " AND a.no_utilisateur = :currentUser AND a.date_fin_encheres <= NOW()";
+		    	map.addValue("currentUser", SecuriteConfig.getCurrentUserId());
+		    }
 		return jdbcTemplate.query(FIND_BY_NAME, map, new ArticleRowMapper());
 	}
 

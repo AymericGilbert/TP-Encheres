@@ -19,7 +19,7 @@
 	
 	 <div>
         <h3>Filtres :</h3>
-        <form th:action="@{/}" method="POST" th:object="${article}">
+        <form th:action="@{/rechercher}" method="POST" th:object="${article}">
             <label for="search">Le nom de l'article contient :</label>
             <input type="text" th:field="*{nomArticle}" id="search" >
             
@@ -27,19 +27,53 @@
             <select th:field="*{categorieArticle}">
    				<option th:each="c : ${categorieSession}" th:value="${c.noCategorie}" th:text="${c.libelle}"></option>
 			</select>
+		
+		<div sec:authorize="isAuthenticated()">	
+		<!-- Section Achats -->
+        <fieldset>
+            <legend>Achats</legend>
+            <input type="checkbox" id="encheresOuvertes" name="encheresOuvertes" value="true">
+            <label for="encheresOuvertes">Enchères ouvertes</label>
+
+            <input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="true">
+            <label for="encheresEnCours">Mes enchères en cours</label>
+
+            <input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="true">
+            <label for="encheresRemportees">Mes enchères remportées</label>
+        </fieldset>
+	
+		
+        <!-- Section Ventes -->
+        <fieldset>
+            <legend>Mes ventes</legend>
+            <input type="checkbox" id="ventesEnCours" name="ventesEnCours" value="true">
+            <label for="ventesEnCours">Mes ventes en cours</label>
+
+            <input type="checkbox" id="ventesNonDebutees" name="ventesNonDebutees" value="true">
+            <label for="ventesNonDebutees">Ventes non débutées</label>
+
+            <input type="checkbox" id="ventesTerminees" name="ventesTerminees" value="true">
+            <label for="ventesTerminees">Ventes terminées</label>
+        </fieldset>
+		</div>	
+			
             <button type="submit">Rechercher</button>
         </form>
     </div>
 	
 	<h2>Liste des enchères</h2>
 	
-	<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div th:each="article : ${articles}" style="border: 1px solid black; width: 300px; padding: 10px; box-shadow: 2px 2px 5px grey;">
-        <h3 th:text="${article.nomArticle}"><a th:href="@{/vue-acquereur/{id}(id=${article.noArticle})}"></a>Nom de l'article</h3>
-        <p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
-        <p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
-        <p>Vendeur : <span th:text="${article.vendeur.pseudo }"></span></p>
-        <a th:href="@{/vue-acquereur/{id}(id=${article.noArticle})}">Voir l'enchère</a>
+	<div th:if="${#lists.isEmpty(articles)}">
+    	<p>Aucune enchère ne correspond à votre recherche.</p>
+	</div>
+
+	<div th:if="${not #lists.isEmpty(articles)}">
+    	<div th:each="article : ${articles}" style="border: 1px solid black; width: 300px; padding: 10px; box-shadow: 2px 2px 5px grey;">
+        	<h3 th:text="${article.nomArticle}">Nom de l'article</h3>
+        	<p>Prix : <span th:text="${article.prixVente} + ' points'"></span></p>
+        	<p>Fin de l'enchère : <span th:text="${article.dateFinEncheres}"></span></p>
+        	<p>Vendeur : <span th:text="${article.vendeur.pseudo}"></span></p>
+        	<a th:href="@{/view-acquereur(noArticle=${article.noArticle})}">Voir l'enchère</a>
     </div>
 </div>
 </body>
