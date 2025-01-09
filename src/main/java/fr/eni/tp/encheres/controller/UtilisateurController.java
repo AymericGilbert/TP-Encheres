@@ -40,10 +40,12 @@ public class UtilisateurController {
     public String creerUtilisateur(@ModelAttribute @Valid Utilisateur nouvelUtilisateur, 
     							   BindingResult bindingResult1, BindingResult bindingResult2) {
     	try {
+    		// On teste si notre utilisateur est validé (email et pseudo uniques et au bon format)
     		if (utilisateurService.validateUtilisateur(nouvelUtilisateur, bindingResult1, bindingResult2)) {
     			this.utilisateurService.add(nouvelUtilisateur);
     			return "redirect:/login";
             }
+    		// Si il y à des erreurs, on les affichent
             if (bindingResult1.hasErrors() || bindingResult2.hasErrors()) {
                 return "mon-profil-creation"; // Si des erreurs sont présentes, la validation échoue
             }

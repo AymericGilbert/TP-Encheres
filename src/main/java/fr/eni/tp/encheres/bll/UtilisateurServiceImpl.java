@@ -33,9 +33,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         if (utilisateurDAO.existByPseudo(utilisateur.getPseudo(), utilisateur.getNoUtilisateur()) ||
         		utilisateurDAO.existByEmail(utilisateur.getEmail(), utilisateur.getNoUtilisateur())) {
         	
+        	// Vérification de l'unicité du pseudo
             if (utilisateurDAO.existByPseudo(utilisateur.getPseudo(), utilisateur.getNoUtilisateur())) {
 				bindingResult1.rejectValue("pseudo", "error.pseudo", "Le pseudo est déjà utilisé.");
 			}
+         // Vérification de l'unicité de l'email
 			if (utilisateurDAO.existByEmail(utilisateur.getEmail(), utilisateur.getNoUtilisateur())) {
 				bindingResult2.rejectValue("email", "error.email", "Cet email est déjà utilisé.");
 			}
