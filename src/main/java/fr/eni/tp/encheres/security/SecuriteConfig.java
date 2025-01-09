@@ -42,8 +42,9 @@ public class SecuriteConfig {
 					.requestMatchers("/", "/index").permitAll()
 					.requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/mon-profil-creation").permitAll() // MODIF
-					.requestMatchers("/session").permitAll() // MODIF
+					.requestMatchers("/mon-profil-creation").permitAll()
+					.requestMatchers("/creationUtilisateur").permitAll()
+					.requestMatchers("/session").permitAll()
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
@@ -96,7 +97,11 @@ public class SecuriteConfig {
      * Récupère l'ID de l'utilisateur actuellement connecté.
      * @return L'ID de l'utilisateur connecté ou null si non connecté.
      */
+<<<<<<< HEAD
 	
+=======
+	@Bean
+>>>>>>> 6d159e7c57e72e36a4a2a9205806f4c9dd27f46b
     public static Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -111,7 +116,11 @@ public class SecuriteConfig {
      * Récupère l'objet utilisateur actuellement connecté.
      * @return L'objet Utilisateur connecté ou null si non connecté.
      */
+<<<<<<< HEAD
 	 
+=======
+	@Bean
+>>>>>>> 6d159e7c57e72e36a4a2a9205806f4c9dd27f46b
     public static Utilisateur getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

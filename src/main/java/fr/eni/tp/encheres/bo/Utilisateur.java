@@ -3,6 +3,13 @@ package fr.eni.tp.encheres.bo;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class Utilisateur implements Serializable {
 	
 	/**
@@ -12,16 +19,43 @@ public class Utilisateur implements Serializable {
 	
 	//numero utilisateur
 	private long noUtilisateur ;
+	
+	@NotBlank(message = "Le pseudo est obligatoire")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le pseudo ne doit contenir que des lettres et des chiffres")
 	private String pseudo;
+	
+	@NotBlank(message = "Votre nom est obligatoire")
 	private String nom;
+	
+	@NotBlank(message = "Votre prénom est obligatoire")
 	private String prenom;
+	
+	@NotBlank(message = "L'email est obligatoire")
+	@Email(message = "L'email doit être valide")
+	@Pattern(regexp = "^[a-zA-Z]+\\.[a-zA-Z]+@[a-zA-Z]+\\.[a-zA-Z]{2,}$", 
+	         message = "L'email doit être au format 'prenom.nom@domaine.com'")
 	private String email;
+	
+	@NotBlank(message = "Le numéro de téléphone est obligatoire")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Le numéro de téléphone n'est pas valide")
 	private String telephone;
+	
+	@NotBlank(message = "Votre adresse est obligatoire")
 	private String rue;
+	
+	@NotNull(message = "Votre code Postal est obligatoire")
+	@Min(value = 10000, message = "Le code postal n'est pas valide")
+	@Max(value = 99999, message = "Le code postal n'est pas valide")
 	private int codePostal;
+	
+	@NotBlank(message = "Votre ville est obligatoire")
 	private String ville;
+	
+	@NotBlank(message = "Votre mot de passe est obligatoire")
 	private String motDePasse;
+	
 	private int credit;
+	
 	private boolean administrateur;
 	
 	private List<ArticlesVendu> articlesVendu;

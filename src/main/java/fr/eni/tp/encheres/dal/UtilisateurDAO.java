@@ -12,11 +12,11 @@ public interface UtilisateurDAO {
 	
 	void delete(Utilisateur utilisateur);
 	
-	boolean compteDejaExistant(String nom);
-	
-	Utilisateur findUtilisateur();
-	
 	Utilisateur readByNoUtilisateur(long noUtilisateur);
+	
+	boolean existByPseudo(String pseudoUtilisateur, long noUtilisateur);
+	
+	boolean existByEmail(String emailUtilisateur, long noUtilisateur);
 	
 	void updateCredit(long noUtilisateur, int credit );
 	
